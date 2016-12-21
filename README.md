@@ -10,20 +10,20 @@ It is available in 3 different versions:
 The base library to use MVP.
 
 ```gradle
-compile 'com.moovel:mvpbase:0.1.0'
+compile 'com.moovel:mvpbase:0.1.0-SNAPSHOT'
 ```
 ## MVPBase rx1
 
 This is an extension for the base library to be used with [RxJava v1.X](https://github.com/ReactiveX/RxJava/tree/1.x)
 ```gradle
-compile 'com.moovel:mvpbase-rx1:0.1.0'
+compile 'com.moovel:mvpbase-rx1:0.1.0-SNAPSHOT'
 ```
 
 ## MVPBase rx
 
 This is an extension for the base library to be used with [RxJava v2.X](https://github.com/ReactiveX/RxJava/tree/2.x)
 ```gradle
-compile 'com.moovel:mvpbase-rx:0.1.0'
+compile 'com.moovel:mvpbase-rx:0.1.0-SNAPSHOT'
 ```
 
 

@@ -1,1 +1,4 @@
-include ':app', ':mvpbase', ':mvpbase-rx1', ':mvpbase-rx'
+//include ':app'
+//include ':mvpbase'
+include ':mvpbase-rx1'
+//include ':mvpbase-rx'
