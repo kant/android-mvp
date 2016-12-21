@@ -16,7 +16,7 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    provided "com.android.support:appcompat-v7:$supportLibraryVersion"
 }
 
 apply plugin: 'com.github.ben-manes.versions'

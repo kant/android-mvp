@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile project(':mvpbase-rx')
     /** dagger2 **/
     provided 'javax.annotation:jsr250-api:1.0'

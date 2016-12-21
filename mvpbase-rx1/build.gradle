@@ -17,7 +17,6 @@ android {
 
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile 'io.reactivex:rxjava:1.2.4'
     compile "com.moovel:mvpbase:$libraryVersion"
 }
