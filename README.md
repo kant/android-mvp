@@ -5,7 +5,6 @@ dagger2 but you can use it with other DI libraries too, it's not depending on an
 
 Dependencies:
 Android Support-Library v22.2.0
-Timber v4.0.0
 
 ## MVPBase
 
