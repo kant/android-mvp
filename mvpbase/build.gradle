@@ -4,19 +4,19 @@ group 'com.moovel'
 version "$libraryVersion"
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 22
     buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "$version"
     }
 }
 
 dependencies {
-    provided "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile 'com.android.support:appcompat-v7:22.2.0'
 }
 
 apply plugin: 'com.github.ben-manes.versions'

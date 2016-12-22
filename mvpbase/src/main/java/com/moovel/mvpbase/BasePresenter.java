@@ -1,5 +1,6 @@
 package com.moovel.mvpbase;
 
+
 import android.support.annotation.CallSuper;
 
 /**
@@ -7,16 +8,15 @@ import android.support.annotation.CallSuper;
  *
  * @param <V> View to handle within this presenter
  */
-public abstract class BasePresenter<V extends MVPBase.View> extends MVPBase.Presenter<V> {
+public abstract class BasePresenter<V extends View> {
+    private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
     private V view;
 
-    @Override
-    void attachView(V mvpView) {
+    public void attachView(V mvpView) {
         view = mvpView;
     }
 
-    @Override
-    void detachView() {
+    public void detachView() {
         view = null;
     }
 
@@ -28,11 +28,20 @@ public abstract class BasePresenter<V extends MVPBase.View> extends MVPBase.Pres
         return view;
     }
 
+    public void addLifecycleInterceptor(LifecycleInterceptor interceptor) {
+        lifecycleInterceptor.addLifecycleInterceptor(interceptor);
+    }
+
+    public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
+        lifecycleInterceptor.removeLifecyclePlugin(interceptor);
+    }
+
     /**
      * Called after the view was attached to this presenter
      */
     @CallSuper
     public void onCreate() {
+        lifecycleInterceptor.doOnCreate();
     }
 
     /**
@@ -40,6 +49,23 @@ public abstract class BasePresenter<V extends MVPBase.View> extends MVPBase.Pres
      */
     @CallSuper
     public void onStart() {
+        lifecycleInterceptor.doOnStart();
+    }
+
+    /**
+     * Called on the lifecycles {@code onResume()} of the Fragment/Activity
+     */
+    @CallSuper
+    public void onResume() {
+        lifecycleInterceptor.doOnResume();
+    }
+
+    /**
+     * Called on the lifecycles {@code onPause()} of the Fragment/Activity
+     */
+    @CallSuper
+    public void onPause() {
+        lifecycleInterceptor.doOnPause();
     }
 
     /**
@@ -47,14 +73,16 @@ public abstract class BasePresenter<V extends MVPBase.View> extends MVPBase.Pres
      */
     @CallSuper
     public void onStop() {
+        lifecycleInterceptor.doOnStop();
     }
 
     /**
      * Called on the lifecycles {@code onDestroy()} of the Fragment/Activity before the
-     * {@link com.moovel.mvpbase.MVPBase.View} gets detached
+     * {@link com.moovel.mvpbase.View} gets detached
      */
     @CallSuper
     public void onDestroy() {
+        lifecycleInterceptor.doOnDestroy();
     }
 
 }
