@@ -6,8 +6,36 @@ dagger2 but you can use it with other DI libraries too, it's not depending on an
 Dependencies:
 Android Support-Library v22.2.0
 
-## MVPBase
+## Dependency
 
+Make sure you have the artifactory setup in your root gradle file:
+
+You need a bintray account and you have to be a **Member** in the "moovel members" Team on bintray. To get invited to the moovel bintray account, please ask @andretietz or @owahlen.
+
+After you are a member create (if not exist already) a ~/.gradle/gradle.properties file (path may differ, example for macos) containing:
+
+    bintrayUser=<username>
+    bintrayKey=<password>
+    artifactoryUser=<artifactory-user>
+    artifactoryPass=<artifactory-password>
+
+```
+allprojects {
+    repositories {
+        ...
+        maven {
+            url "http://artifactory.moovel.com:8080/artifactory/libs-snapshot-local"
+            credentials {
+                username = project.hasProperty('artifactoryUser') ? project.artifactoryUser : System.getenv('ARTIFACTORY_USER')
+                password = project.hasProperty('artifactoryPass') ? project.artifactoryPass : System.getenv('ARTIFACTORY_PASSWORD')
+            }
+        }
+```
+
+Then add the library to your dependencies:
+```
+compile 'com.moovel:mvpbase:0.1.0-SNAPSHOT'
+```
 
 # How to use it
 DI Frameworks provide a Dependency Graph. In Dagger2 this is called "Component". This is why in all our examples we're
