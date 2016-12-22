@@ -117,7 +117,7 @@ We are using them for autounsubscribing from rxjava Subscriptions or as they are
 An implementation could look like this:
 
 ```
-public final class RxLifecycleInterceptor implements LifecycleInterceptor {
+public final class RxLifecycleInterceptor implements LifecycleAdapter {
 
     private static final int PAUSE = 0;
     private static final int STOP = 1;
@@ -161,18 +161,6 @@ public final class RxLifecycleInterceptor implements LifecycleInterceptor {
     @Override
     public void doOnDestroy() {
         clearSubscription(DESTROY);
-    }
-
-    @Override
-    public void doOnCreate() {
-    }
-
-    @Override
-    public void doOnStart() {
-    }
-
-    @Override
-    public void doOnResume() {
     }
 
     @Override
