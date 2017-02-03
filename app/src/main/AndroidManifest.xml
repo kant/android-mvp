@@ -3,13 +3,13 @@
           package="com.moovel.mvpbase.demo">
 
     <application
-        android:name=".MoovelApplication"
+        android:name="com.moovel.mvp.demo.MoovelApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.main.MainActivity">
+        <activity android:name="com.moovel.mvp.demo.screens.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
