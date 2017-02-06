@@ -15,4 +15,8 @@ public abstract class SimpleActivity extends MVPActivity<MVPView,
         }
     }
 
+    @Override
+    protected Object getDependencyGraph() {
+        return null;
+    }
 }
