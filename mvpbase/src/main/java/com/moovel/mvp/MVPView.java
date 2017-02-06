@@ -1,4 +1,4 @@
 package com.moovel.mvp;
 
-public interface View {
+public interface MVPView {
 }

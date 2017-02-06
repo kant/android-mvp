@@ -2,12 +2,12 @@ package com.moovel.mvp.demo;
 
 import android.app.Application;
 
-import com.moovel.mvp.DependencyGraphProvider;
 import com.moovel.mvp.demo.injection.DaggerMoovelComponent;
 import com.moovel.mvp.demo.injection.MoovelComponent;
+import com.moovel.mvp.demo.injection.MoovelComponentProvider;
 import com.moovel.mvp.demo.injection.MoovelModule;
 
-public class MoovelApplication extends Application implements DependencyGraphProvider<MoovelComponent> {
+public class MoovelApplication extends Application implements MoovelComponentProvider {
     private MoovelComponent component;
 
     @Override
@@ -17,7 +17,7 @@ public class MoovelApplication extends Application implements DependencyGraphPro
     }
 
     @Override
-    public MoovelComponent getDependencyGraph() {
+    public MoovelComponent getMoovelComponent() {
         return component;
     }
 }

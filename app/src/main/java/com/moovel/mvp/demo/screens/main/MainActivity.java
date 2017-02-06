@@ -6,8 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.moovel.mvp.demo.MoovelBaseActivity;
-import com.moovel.mvp.demo.R;
 import com.moovel.mvp.demo.injection.MoovelComponent;
+import com.moovel.mvp.demo.injection.MoovelComponentProvider;
+import com.moovel.mvpbase.demo.R;
 
 import javax.inject.Inject;
 
@@ -21,6 +22,11 @@ public class MainActivity extends MoovelBaseActivity<MainView, MainPresenter> im
     public MainPresenter inject(MoovelComponent dependencyGraph) {
         dependencyGraph.inject(this);
         return presenter;
+    }
+
+    @Override
+    protected MoovelComponent getDependencyGraph() {
+        return ((MoovelComponentProvider)getApplication()).getMoovelComponent();
     }
 
     @Override

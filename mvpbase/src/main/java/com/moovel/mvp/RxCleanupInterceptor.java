@@ -8,9 +8,9 @@ import rx.subscriptions.CompositeSubscription;
 
 public final class RxCleanupInterceptor extends LifecycleAdapter {
 
-    private static final int PAUSE = 0;
-    private static final int STOP = 1;
-    private static final int DESTROY = 2;
+    public static final int PAUSE = 0;
+    public static final int STOP = 1;
+    public static final int DESTROY = 2;
 
     private final Map<Integer, CompositeSubscription> subscriptionMap = new HashMap<>(3);
 

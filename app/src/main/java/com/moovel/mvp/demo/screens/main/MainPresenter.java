@@ -1,24 +1,21 @@
 package com.moovel.mvp.demo.screens.main;
 
-import com.moovel.mvp.BasePresenter;
+import com.moovel.mvp.RxLifecyclePresenter;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import rx.Observable;
 
 
-public class MainPresenter extends BasePresenter<MainView> {
+public class MainPresenter extends RxLifecyclePresenter<MainView> {
 
-    private final RxLifecycleInterceptor rxinterceptor;
     private String string;
 
     @Inject
     public MainPresenter(String injectedString) {
         this.string = injectedString;
-        this.rxinterceptor = new RxLifecycleInterceptor();
-        addLifecycleInterceptor(rxinterceptor);
     }
 
     public String getInjectedString() {
@@ -28,7 +25,7 @@ public class MainPresenter extends BasePresenter<MainView> {
     @Override
     public void onCreate() {
         super.onCreate();
-        rxinterceptor.untilOnStop(
+        untilOnStop(
                 Observable.interval(0, 5, TimeUnit.SECONDS)
                         .subscribe(item -> getView().log(String.format("Log: %d", item)))
 

@@ -4,17 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public abstract class MVPActivity<VIEW extends View,
+public abstract class MVPActivity<VIEW extends MVPView,
         PRESENTER extends BasePresenter<VIEW>,
-        DEPENDENCYGRAPH,
-        PROVIDER extends DependencyGraphProvider<DEPENDENCYGRAPH>>
+        DEPENDENCYGRAPH>
         extends AppCompatActivity {
 
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
     private PRESENTER presenter;
 
     public MVPActivity() {
-        if (!(this instanceof View)) {
+        if (!(this instanceof MVPView)) {
             throw new IllegalStateException(
                     String.format("The Activity \"%s\" must implement a View!", this.getClass().getSimpleName()));
         }
@@ -31,12 +30,14 @@ public abstract class MVPActivity<VIEW extends View,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = inject(getDependencyGraphProvider().getDependencyGraph());
+        presenter = inject(getDependencyGraph());
         //noinspection unchecked
         presenter.attachView((VIEW) this);
         presenter.onCreate();
         lifecycleInterceptor.doOnCreate();
     }
+
+    protected abstract DEPENDENCYGRAPH getDependencyGraph();
 
     @Override
     protected void onStart() {
@@ -81,10 +82,5 @@ public abstract class MVPActivity<VIEW extends View,
      * @return the presenter
      */
     protected abstract PRESENTER inject(DEPENDENCYGRAPH dependencyGraph);
-
-    /**
-     * @return a dependency graph provider
-     */
-    protected abstract PROVIDER getDependencyGraphProvider();
 
 }

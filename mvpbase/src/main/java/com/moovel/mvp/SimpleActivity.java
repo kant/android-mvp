@@ -1,7 +1,7 @@
 package com.moovel.mvp;
 
-public abstract class SimpleActivity extends MVPActivity<View,
-        SimpleActivity.SimplePresenter, Object, SimpleActivity.SimpleDependencyGraphProvider> implements View {
+public abstract class SimpleActivity extends MVPActivity<MVPView,
+        SimpleActivity.SimplePresenter, Object> implements MVPView {
 
     private final SimplePresenter presenter = new SimplePresenter();
 
@@ -10,15 +10,9 @@ public abstract class SimpleActivity extends MVPActivity<View,
         return presenter;
     }
 
-    static class SimplePresenter extends BasePresenter<View> {
+    static class SimplePresenter extends BasePresenter<MVPView> {
         SimplePresenter() {
         }
     }
 
-    static class SimpleDependencyGraphProvider implements DependencyGraphProvider<Object> {
-        @Override
-        public Object getDependencyGraph() {
-            return null;
-        }
-    }
 }

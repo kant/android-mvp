@@ -27,7 +27,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.3'
+    compile "io.reactivex:rxjava:$rxjavaVersion"
     compile project(':mvpbase')
     /** dagger2 **/
     provided 'javax.annotation:jsr250-api:1.0'

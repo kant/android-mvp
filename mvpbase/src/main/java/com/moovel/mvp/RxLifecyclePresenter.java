@@ -2,7 +2,7 @@ package com.moovel.mvp;
 
 import rx.Subscription;
 
-public abstract class RxLifecyclePresenter<V extends View> extends BasePresenter<V> {
+public abstract class RxLifecyclePresenter<V extends MVPView> extends BasePresenter<V> {
 
     private final RxCleanupInterceptor lifecycleInterceptor = new RxCleanupInterceptor();
 

@@ -8,7 +8,7 @@ import android.support.annotation.CallSuper;
  *
  * @param <V> View to handle within this presenter
  */
-public abstract class BasePresenter<V extends View> {
+public abstract class BasePresenter<V extends MVPView> {
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
     private V view;
 
@@ -78,7 +78,7 @@ public abstract class BasePresenter<V extends View> {
 
     /**
      * Called on the lifecycles {@code onDestroy()} of the Fragment/Activity before the
-     * {@link com.moovel.mvp.View} gets detached
+     * {@link MVPView} gets detached
      */
     @CallSuper
     public void onDestroy() {
