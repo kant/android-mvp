@@ -15,6 +15,7 @@ public abstract class MVPFragment<VIEW extends MVPView,
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
 
     private PRESENTER presenter;
+    private int componentHash = 0;
 
     public MVPFragment() {
         if (!(this instanceof MVPView)) {
@@ -34,7 +35,9 @@ public abstract class MVPFragment<VIEW extends MVPView,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = inject(getDependencyGraph());
+        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
+        componentHash = dependencyGraph.hashCode();
+        presenter = inject(dependencyGraph);
     }
 
     protected abstract DEPENDENCYGRAPH getDependencyGraph();
@@ -58,6 +61,10 @@ public abstract class MVPFragment<VIEW extends MVPView,
     @Override
     public void onResume() {
         super.onResume();
+        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
+        if (dependencyGraph.hashCode() != componentHash) {
+            presenter = inject(dependencyGraph);
+        }
         presenter.onResume();
         lifecycleInterceptor.doOnPause();
     }

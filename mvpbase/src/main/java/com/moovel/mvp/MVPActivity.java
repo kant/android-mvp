@@ -11,6 +11,7 @@ public abstract class MVPActivity<VIEW extends MVPView,
 
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
     private PRESENTER presenter;
+    private int componentHash = 0;
 
     public MVPActivity() {
         if (!(this instanceof MVPView)) {
@@ -30,7 +31,9 @@ public abstract class MVPActivity<VIEW extends MVPView,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = inject(getDependencyGraph());
+        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
+        componentHash = dependencyGraph.hashCode();
+        presenter = inject(dependencyGraph);
         //noinspection unchecked
         presenter.attachView((VIEW) this);
         presenter.onCreate();
@@ -49,6 +52,10 @@ public abstract class MVPActivity<VIEW extends MVPView,
     @Override
     protected void onResume() {
         super.onResume();
+        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
+        if (dependencyGraph.hashCode() != componentHash) {
+            presenter = inject(dependencyGraph);
+        }
         presenter.onResume();
         lifecycleInterceptor.doOnResume();
     }
