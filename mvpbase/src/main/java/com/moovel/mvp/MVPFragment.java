@@ -40,7 +40,19 @@ public abstract class MVPFragment<VIEW extends MVPView,
         presenter = inject(dependencyGraph);
     }
 
-    protected abstract DEPENDENCYGRAPH getDependencyGraph();
+    private DEPENDENCYGRAPH getDependencyGraph() {
+        try {
+            return ((MVPApplication) getActivity().getApplication()).getComponent(getComponentClass());
+        } catch (ClassCastException e) {
+            throw new IllegalStateException(String.format("Your Application must implement %s",
+                    MVPApplication.class.getSimpleName()));
+        }
+    }
+
+    /**
+     * @return the class object of the component, the fragment requires
+     */
+    protected abstract Class<DEPENDENCYGRAPH> getComponentClass();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

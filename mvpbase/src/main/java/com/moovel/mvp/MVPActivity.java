@@ -40,7 +40,20 @@ public abstract class MVPActivity<VIEW extends MVPView,
         lifecycleInterceptor.doOnCreate();
     }
 
-    protected abstract DEPENDENCYGRAPH getDependencyGraph();
+    /**
+     * @return the class object of the component, the activity requires
+     */
+    protected abstract Class<DEPENDENCYGRAPH> getComponentClass();
+
+    private DEPENDENCYGRAPH getDependencyGraph() {
+        try {
+            return ((MVPApplication) getApplication()).getComponent(getComponentClass());
+        } catch (ClassCastException e) {
+            throw new IllegalStateException(String.format("Your Application must implement %s",
+                    MVPApplication.class.getSimpleName()));
+        }
+
+    }
 
     @Override
     protected void onStart() {
