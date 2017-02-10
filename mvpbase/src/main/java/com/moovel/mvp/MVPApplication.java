@@ -11,10 +11,11 @@ public abstract class MVPApplication extends Application {
     /**
      * Registers a DI Graph
      *
-     * @param component to register
+     * @param componentClass class to identify the component
+     * @param component      to register
      */
-    public void registerComponent(Object component) {
-        componentMap.put(component.getClass(), component);
+    public <T> void registerComponent(Class<T> componentClass, T component) {
+        componentMap.put(componentClass, component);
     }
 
     /**
