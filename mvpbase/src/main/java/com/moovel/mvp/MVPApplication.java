@@ -13,7 +13,7 @@ public abstract class MVPApplication extends Application {
      *
      * @param component to register
      */
-    protected void registerComponent(Object component) {
+    public void registerComponent(Object component) {
         componentMap.put(component.getClass(), component);
     }
 
@@ -24,7 +24,7 @@ public abstract class MVPApplication extends Application {
      * @throws IllegalStateException when there's no component registered
      */
     @SuppressWarnings("unchecked")
-    protected <T> T getComponent(Class<T> componentClass) {
+    public <T> T getComponent(Class<T> componentClass) {
         Object component = componentMap.get(componentClass);
         if (component == null) {
             throw new IllegalStateException(
