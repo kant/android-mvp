@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+group 'com.moovel.mvp'
+version "$libraryVersion"
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "$version"
+    }
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "io.reactivex:rxjava:$rxjavaVersion"
+    compile "com.moovel.mvp:mvp:$libraryVersion"
+}
+
+apply plugin: 'com.github.ben-manes.versions'
+apply from: 'maven.gradle'
+apply from: '../snapshot.gradle'
+apply from: '../checkstyle.gradle'

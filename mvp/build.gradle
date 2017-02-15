@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-group 'com.moovel'
+group 'com.moovel.mvp'
 version "$libraryVersion"
 
 android {
@@ -17,7 +17,6 @@ android {
 
 dependencies {
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "io.reactivex:rxjava:$rxjavaVersion"
     compile "com.jakewharton.timber:timber:$timberVersion"
 }
 

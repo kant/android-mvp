@@ -1,4 +1,4 @@
-package com.moovel.mvp;
+package com.moovel.mvp.rx;
 
 import java.util.HashMap;
 import java.util.Map;
