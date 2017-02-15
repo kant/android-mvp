@@ -17,7 +17,6 @@ android {
 
 dependencies {
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.jakewharton.timber:timber:$timberVersion"
     compile "io.reactivex:rxjava:$rxjavaVersion"
     compile "com.jakewharton.timber:timber:$timberVersion"
 }
