@@ -4,7 +4,7 @@ import android.app.Application;
 
 import java.util.HashMap;
 
-public abstract class MVPApplication extends Application {
+public abstract class MVPApplication extends Application implements ComponentProvider {
 
     private final HashMap<Class<?>, Object> componentMap = new HashMap<>();
 
@@ -14,6 +14,7 @@ public abstract class MVPApplication extends Application {
      * @param componentClass class to identify the component
      * @param component      to register
      */
+    @Override
     public <T> void registerComponent(Class<T> componentClass, T component) {
         componentMap.put(componentClass, component);
     }
@@ -25,13 +26,14 @@ public abstract class MVPApplication extends Application {
      * @throws IllegalStateException when there's no component registered
      */
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T getComponent(Class<T> componentClass) {
         Object component = componentMap.get(componentClass);
         if (component == null) {
             throw new IllegalStateException(
                     String.format("No component %s registered! Please register your component "
                                     + "using %s.registerComponent(component)",
-                            componentClass.getSimpleName(), MVPApplication.class.getSimpleName()
+                            componentClass.getSimpleName(), ComponentProvider.class.getSimpleName()
                     )
             );
         }

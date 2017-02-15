@@ -42,10 +42,10 @@ public abstract class MVPFragment<VIEW extends MVPView,
 
     private DEPENDENCYGRAPH getDependencyGraph() {
         try {
-            return ((MVPApplication) getActivity().getApplication()).getComponent(getComponentClass());
+            return ((ComponentProvider) getActivity().getApplication()).getComponent(getComponentClass());
         } catch (ClassCastException e) {
             throw new IllegalStateException(String.format("Your Application must implement %s",
-                    MVPApplication.class.getSimpleName()));
+                    ComponentProvider.class.getSimpleName()));
         }
     }
 
