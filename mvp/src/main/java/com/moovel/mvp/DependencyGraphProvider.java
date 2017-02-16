@@ -1,7 +1,7 @@
 package com.moovel.mvp;
 
 
-public interface ComponentProvider {
+public interface DependencyGraphProvider {
 
     /**
      * registers a component for injection

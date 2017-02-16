@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
  * Every Fragment should extend the MVPFragment, which provides some mvp base functionalities
  */
 public abstract class MVPFragment<VIEW extends MVPView,
-        PRESENTER extends BasePresenter<VIEW>,
+        PRESENTER extends MVPPresenter<VIEW>,
         DEPENDENCYGRAPH>
         extends Fragment {
 
@@ -29,7 +29,7 @@ public abstract class MVPFragment<VIEW extends MVPView,
     }
 
     public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.removeLifecyclePlugin(interceptor);
+        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
     }
 
     @Override
@@ -42,10 +42,10 @@ public abstract class MVPFragment<VIEW extends MVPView,
 
     private DEPENDENCYGRAPH getDependencyGraph() {
         try {
-            return ((ComponentProvider) getActivity().getApplication()).getComponent(getComponentClass());
+            return ((DependencyGraphProvider) getActivity().getApplication()).getComponent(getComponentClass());
         } catch (ClassCastException e) {
             throw new IllegalStateException(String.format("Your Application must implement %s",
-                    ComponentProvider.class.getSimpleName()));
+                    DependencyGraphProvider.class.getSimpleName()));
         }
     }
 
@@ -76,6 +76,7 @@ public abstract class MVPFragment<VIEW extends MVPView,
         DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
         if (dependencyGraph.hashCode() != componentHash) {
             presenter = inject(dependencyGraph);
+            componentHash = dependencyGraph.hashCode();
         }
         presenter.onResume();
         lifecycleInterceptor.doOnPause();

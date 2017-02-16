@@ -6,120 +6,100 @@ dagger2 but you can use it with other DI libraries too, it's not depending on an
 Dependencies:
 Android Support-Library v22.2.0
 
-## Dependency
-
-Make sure you have the artifactory setup in your root gradle file:
-
-You need a bintray account and you have to be a **Member** in the "moovel members" Team on bintray. To get invited to the moovel bintray account, please ask @andretietz or @owahlen.
-
-After you are a member create (if not exist already) a ~/.gradle/gradle.properties file (path may differ, example for macos) containing:
-
-    bintrayUser=<username>
-    bintrayKey=<password>
-    artifactoryUser=<artifactory-user>
-    artifactoryPass=<artifactory-password>
-
-```
-allprojects {
-    repositories {
-        ...
-        maven {
-            url "http://artifactory.moovel.com:8080/artifactory/libs-snapshot-local"
-            credentials {
-                username = project.hasProperty('artifactoryUser') ? project.artifactoryUser : System.getenv('ARTIFACTORY_USER')
-                password = project.hasProperty('artifactoryPass') ? project.artifactoryPass : System.getenv('ARTIFACTORY_PASSWORD')
-            }
-        }
-```
 
 Then add the library to your dependencies:
 ```
-compile 'com.moovel:mvpbase:0.1.0-SNAPSHOT'
+compile 'com.moovel.mvp:mvp:0.1.0-SNAPSHOT'
 ```
 
 # How to use it
-DI Frameworks provide a Dependency Graph. In Dagger2 this is called "Component". This is why in all our examples we're
-using this terminology.
+DI Frameworks usually provide a Dependency Graph. In Dagger2 this is called "Component". This is why in all our examples
+we're using this terminology.
 
-### 1. Provide a DependencyGraph and a DependencyGraphProvider
+### 1. Provide a DependencyGraphProvider
 
-```
-public class MoovelApplication extends Application implements DependencyGraphProvider<MoovelComponent> {
-    private MoovelComponent component;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        // this is quite dagger 2 specific. Can be some other DI Framework too
-        component = DaggerMoovelComponent.builder().moovelModule(new MoovelModule()).build();
-    }
-
-    @Override
-    public MoovelComponent getDependencyGraph() {
-        return component;
-    }
-}
-```
-
-In this piece of code you see a DependencyGraphProvider (MoovelApplication), that is able to provide a dependencyGraph
-(MoovelComponent)
-
-### 2. Create a BaseActivity and/or a BaseFragment class in your project.
-This class should extend the (Rx)MVPBaseActivity/(Rx)MVPBaseFragment define what dependency graph is provided and which
-class provides it.
+Let your Application-class extend MVPApplication would be the easiest way of providing a DependencyGraphProvider.
+If you cannot do this for some reason let your application class implement DependencyGraphProvider.
 
 ```
-public abstract class MoovelBaseActivity<V extends MVPBase.View, P extends BasePresenter<V>>
-        extends MVPActivity<V, P, MoovelComponent, MoovelApplication> {
+    /**
+     * registers a component for injection
+     */
+    public <T> void registerComponent(Class<T> componentClass, T component);
 
-    @Override
-    public MoovelApplication getDependencyGraphProvider() {
-        return (MoovelApplication) getApplication();
-    }
-}
+    /**
+     * @param componentClass to receive
+     * @throws IllegalStateException when the component is not registered
+     */
+    public <T> T getComponent(Class<T> componentClass);
 ```
 
-Here we created the MoovelBaseActivity, extending MVPBaseActivity and specified which DependencyGraph to
-use (MoovelComponent) and which class is providing it (MoovelApplication). **View and Presenter stay unspecified!**
 
-Additionally we tell the Base class how to get the DependencyGraphProvider.
-
-### 3. Straight forward MVP coding
-
-#### Create your View extending MVPBase.View
+### 2. Create a View and a Presenter for each screen you have
+Create a basic view interface
 ```
-public interface MainView extends MVPBase.View {
-    ... // your view methods
-}
-```
-#### Create your presenter extending (Rx)BasePresenter<view>
-```
-public class MainPresenter extends BasePresenter<MainView> {
-    ... // your presenter methods
-}
-```
-#### Implement your View
-In your actual implementation you must provide the view and the presenter as generic types.
-And your ViewClass **must implement the View! If not an exception will be thrown!**
-```
-public class MainActivity extends MoovelBaseActivity<MainView, MainPresenter> implements MainView {
-
-    @Inject
-    MainPresenter presenter;
-
-    @Override
-    public MainPresenter inject(MoovelComponent dependencyGraph) {
-        dependencyGraph.inject(this);
-        return presenter;
-    }
-
+public interface AwesomeView extends MVPView {
     ...
 }
 ```
-The method "inject" must be implemented if you followed this howto correctly. It will provide you the required
-dependency graph with which you can inject your dependencies.
-In this example you can see this quite nice. After injecting MainActivity using MoovelComponent the presenter is available
 
+Create the Presenter, it's recommended to inject everything you need in the constructor of the presenter already,
+so don't forget the @Inject Annotation if you need it.
+```
+public class AwesomePresenter extends MVPPresenter<AwesomeView> {
+    @Inject
+    public AwesomePresenter() {
+    }
+}
+```
+
+### 3. Create your screens
+Extend your Fragment from MVPFragment or your Activity from MVPActivity. These are
+generic classes using 3 generic types. The first one is the view interface it's supposed to implement.
+The second one is the presenter that's provided by this screen, the third one is the Class of the DependencyGraph (Component)
+required.
+Here an example for an activity:
+
+
+```
+public class AwesomeActivity extends MVPActivity<
+    AwesomeView,
+    AwesomePresenter,
+    AwesomeComponent> implements AwesomeView {
+
+    @Inject
+    AwesomePresenter presenter;
+
+    ...
+
+    @Override
+    protected AwesomePresenter inject(AwesomeComponent component) {
+        component.inject(this);
+        return presenter;
+    }
+
+    @Override
+    protected Class<AwesomeComponent> getComponentClass() {
+        return AwesomeComponent.class;
+    }
+}
+```
+
+### 4. Create your DependencyGraph
+```
+public AwesomeApplication extends MVPApplication {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        registerComponent(AwesomeComponent.class, DaggerAwesomeComponent
+                .builder()
+                .awesomeModule(new AwesomeModule())
+                .build());
+    }
+}
+```
+
+Now you should be able to start your app and use a straight forward MVP pattern.
 
 # Lifecycle Interceptors
 
@@ -133,86 +113,34 @@ LifecycleInterceptors are Interfaces that will be called during following Lifecy
 * onDestroy
 
 Within the library you have the chance to add LifecycleInterceptors to:
- * BasePresenter (add/removeLifecycleInterceptor)
+ * MVPPresenter (add/removeLifecycleInterceptor)
  * MVPActivity (add/removeLifecycleInterceptor)
  * MVPFragment (add/removeLifecycleInterceptor)
 
-I highly recommend using the Defaultconstructor to register them.
+I recommend using the Defaultconstructor to register them.
 
-We are using them for autounsubscribing from rxjava Subscriptions or as they are called in rxjava2 Disposables.
+We are using them for autounsubscribing from rxjava Subscriptions, or as they are called in rxjava2, Disposables.
 
-An implementation could look like this:
+# Lifecycle Event Scheduler
+Sometimes you want to do a particular action, when a lifecycle event is happening. We needed this in the first
+place to unsubscribe from rxjava Observables
 
+This is why we introduced the LifecycleEventScheduler. It is an implementation of a LifecycleInterceptor
+and can call an action whenever a lifecycle event is happening.
+
+Example:
 ```
-public final class RxLifecycleInterceptor implements LifecycleAdapter {
+private static final LifecycleEventScheduler<Subscription> CLEANUP =
+        // define an action that is happening, when an event was triggered
+        new LifecycleEventScheduler<>((event, item) -> item.unsubscribe());
 
-    private static final int PAUSE = 0;
-    private static final int STOP = 1;
-    private static final int DESTROY = 2;
-
-    private final SparseArray<CompositeSubscription> subscriptionMap = new SparseArray<>(3);
-
-    /**
-     * auto unsubscribes from subscription on "onStop()"
-     *
-     * @param subscription to unsubscribe from
-     */
-    protected void untilOnStop(Subscription subscription) {
-        addSubscription(STOP, subscription);
-    }
-
-    /**
-     * auto unsubscribes from subscription on "onDestroy()"
-     *
-     * @param subscription to unsubscribe from
-     */
-    protected void untilOnDestroy(Subscription subscription) {
-        addSubscription(DESTROY, subscription);
-    }
-
-    /**
-     * auto unsubscribes from subscription on "onPause()"
-     *
-     * @param subscription to unsubscribe from
-     */
-    protected void untilOnPause(Subscription subscription) {
-        addSubscription(PAUSE, subscription);
-    }
-
-
-    @Override
-    public void doOnStop() {
-        clearSubscription(STOP);
-    }
-
-    @Override
-    public void doOnDestroy() {
-        clearSubscription(DESTROY);
-    }
-
-    @Override
-    public void doOnPause() {
-        clearSubscription(PAUSE);
-    }
-
-    private void addSubscription(int idx, Subscription subscription) {
-        CompositeSubscription idxSubsription = subscriptionMap.get(idx);
-        if (idxSubsription == null) {
-            idxSubsription = new CompositeSubscription();
-            subscriptionMap.put(idx, idxSubsription);
-        }
-        idxSubsription.add(subscription);
-    }
-
-    private void clearSubscription(int idx) {
-        CompositeSubscription idxSubsription = subscriptionMap.get(idx);
-        if (idxSubsription == null) return;
-        idxSubsription.clear();
-
-    }
+@Override
+public void onCreate() {
+    super.onCreate();
+    // enqueue the action to trigger onStop
+    CLEANUP.enqueue(STOP, getSomeObservable
+            .subscribe(item -> {/* do something */}));
 }
-
 ```
-
 
 Example Code using mvpbase can be found [here](https://github.com/moovel/android-mvp/blob/master/app/src/main/java/com/moovel/mvpbase/demo/screens/main/MainActivity.java)

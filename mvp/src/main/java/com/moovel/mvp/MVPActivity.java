@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 public abstract class MVPActivity<VIEW extends MVPView,
-        PRESENTER extends BasePresenter<VIEW>,
+        PRESENTER extends MVPPresenter<VIEW>,
         DEPENDENCYGRAPH>
         extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public abstract class MVPActivity<VIEW extends MVPView,
     }
 
     public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.removeLifecyclePlugin(interceptor);
+        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
     }
 
     @Override
@@ -47,10 +47,10 @@ public abstract class MVPActivity<VIEW extends MVPView,
 
     private DEPENDENCYGRAPH getDependencyGraph() {
         try {
-            return ((ComponentProvider) getApplication()).getComponent(getComponentClass());
+            return ((DependencyGraphProvider) getApplication()).getComponent(getComponentClass());
         } catch (ClassCastException e) {
             throw new IllegalStateException(String.format("Your Application must implement %s",
-                    ComponentProvider.class.getSimpleName()));
+                    DependencyGraphProvider.class.getSimpleName()));
         }
 
     }
@@ -68,6 +68,7 @@ public abstract class MVPActivity<VIEW extends MVPView,
         DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
         if (dependencyGraph.hashCode() != componentHash) {
             presenter = inject(dependencyGraph);
+            componentHash = dependencyGraph.hashCode();
         }
         presenter.onResume();
         lifecycleInterceptor.doOnResume();

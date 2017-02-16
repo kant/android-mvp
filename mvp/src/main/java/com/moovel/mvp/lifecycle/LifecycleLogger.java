@@ -1,4 +1,6 @@
-package com.moovel.mvp;
+package com.moovel.mvp.lifecycle;
+
+import com.moovel.mvp.LifecycleInterceptor;
 
 import timber.log.Timber;
 

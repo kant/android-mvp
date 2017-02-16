@@ -15,7 +15,7 @@ bintray {
     pkg {
         repo = 'android'
         userOrg = 'moovel'
-        name = 'mvpbase'
+        name = 'mvp'
         desc = 'This is the moovel mvpbase project for android'
         websiteUrl = siteUrl
         issueTrackerUrl = issuesUrl

@@ -8,7 +8,7 @@ import android.support.annotation.CallSuper;
  *
  * @param <V> View to handle within this presenter
  */
-public abstract class BasePresenter<V extends MVPView> {
+public abstract class MVPPresenter<V extends MVPView> {
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
     private V view;
 
@@ -33,7 +33,7 @@ public abstract class BasePresenter<V extends MVPView> {
     }
 
     public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.removeLifecyclePlugin(interceptor);
+        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
     }
 
     /**

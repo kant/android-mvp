@@ -1,18 +1,17 @@
 package com.moovel.mvp;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 final class CompositeLifecycleInterceptor implements LifecycleInterceptor {
 
-
-    private final List<LifecycleInterceptor> plugins = new ArrayList<>();
+    private final Set<LifecycleInterceptor> plugins = new HashSet<>();
 
     public void addLifecycleInterceptor(LifecycleInterceptor plugin) {
         plugins.add(plugin);
     }
 
-    public void removeLifecyclePlugin(LifecycleInterceptor plugin) {
+    public void removeLifecycleInterceptor(LifecycleInterceptor plugin) {
         plugins.remove(plugin);
     }
 

@@ -5,29 +5,24 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.moovel.mvp.demo.MoovelBaseActivity;
-import com.moovel.mvp.demo.injection.MoovelComponent;
-import com.moovel.mvp.demo.injection.MoovelComponentProvider;
+import com.moovel.mvp.demo.BaseActivity;
+import com.moovel.mvp.demo.injection.AwesomeComponent;
 import com.moovel.mvpbase.demo.R;
 
 import javax.inject.Inject;
 
-public class MainActivity extends MoovelBaseActivity<MainView, MainPresenter> implements MainView {
+public class AwesomeActivity extends BaseActivity<AwesomeView, AwesomePresenter> implements AwesomeView {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = AwesomeActivity.class.getSimpleName();
     @Inject
-    MainPresenter presenter;
+    AwesomePresenter presenter;
 
     @Override
-    public MainPresenter inject(MoovelComponent dependencyGraph) {
+    public AwesomePresenter inject(AwesomeComponent dependencyGraph) {
         dependencyGraph.inject(this);
         return presenter;
     }
 
-    @Override
-    protected MoovelComponent getDependencyGraph() {
-        return ((MoovelComponentProvider)getApplication()).getMoovelComponent();
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

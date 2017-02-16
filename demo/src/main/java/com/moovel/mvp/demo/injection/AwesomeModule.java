@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class MoovelModule {
+public class AwesomeModule {
 
     @Provides
     @Singleton

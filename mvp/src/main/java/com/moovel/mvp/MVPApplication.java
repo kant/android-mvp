@@ -4,7 +4,7 @@ import android.app.Application;
 
 import java.util.HashMap;
 
-public abstract class MVPApplication extends Application implements ComponentProvider {
+public abstract class MVPApplication extends Application implements DependencyGraphProvider {
 
     private final HashMap<Class<?>, Object> componentMap = new HashMap<>();
 
@@ -33,7 +33,7 @@ public abstract class MVPApplication extends Application implements ComponentPro
             throw new IllegalStateException(
                     String.format("No component %s registered! Please register your component "
                                     + "using %s.registerComponent(component)",
-                            componentClass.getSimpleName(), ComponentProvider.class.getSimpleName()
+                            componentClass.getSimpleName(), DependencyGraphProvider.class.getSimpleName()
                     )
             );
         }

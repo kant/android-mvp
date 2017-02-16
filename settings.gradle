@@ -1,3 +1,2 @@
-//include ':demo'
-include ':mvp-rx'
-//include ':mvp'
+include ':demo'
+include ':mvp'
