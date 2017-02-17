@@ -19,7 +19,7 @@ we're using this terminology.
 ### 1. Provide a DependencyGraphProvider
 
 Let your Application-class extend MVPApplication would be the easiest way of providing a DependencyGraphProvider.
-If you cannot do this for some reason let your application class implement DependencyGraphProvider.
+If you cannot do this for some reason let your Application class implement the interface DependencyGraphProvider.
 
 ```
     /**
@@ -48,7 +48,7 @@ so don't forget the @Inject Annotation if you need it.
 ```
 public class AwesomePresenter extends MVPPresenter<AwesomeView> {
     @Inject
-    public AwesomePresenter() {
+    public AwesomePresenter(ContructorInjectedDependency dependency) {
     }
 }
 ```
@@ -56,7 +56,7 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
 ### 3. Create your screens
 Extend your Fragment from MVPFragment or your Activity from MVPActivity. These are
 generic classes using 3 generic types. The first one is the view interface it's supposed to implement.
-The second one is the presenter that's provided by this screen, the third one is the Class of the DependencyGraph (Component)
+The second one is the presenter that's provided by the screen and the third one is the Class of the DependencyGraph (Component)
 required.
 Here an example for an activity:
 
@@ -103,7 +103,7 @@ Now you should be able to start your app and use a straight forward MVP pattern.
 
 # Lifecycle Interceptors
 
-LifecycleInterceptors are Interfaces that will be called during following Lifecycle-Events:
+LifecycleInterceptors are Interfaces that have callbacks on following Lifecycle-Events:
 
 * onCreate
 * onStart
@@ -122,26 +122,32 @@ I recommend using the Defaultconstructor to register them.
 We are using them for autounsubscribing from rxjava Subscriptions, or as they are called in rxjava2, Disposables.
 
 # Lifecycle Event Scheduler
-Sometimes you want to do a particular action, when a lifecycle event is happening. We needed this in the first
-place to unsubscribe from rxjava Observables
+Sometimes you want to execute an action, when a lifecycle event happens i.e. you want to cancel http requests when
+the activity is stops or you want to unsubscribe from an rxjava subscription/disposable when the
+activity is pausing.
 
-This is why we introduced the LifecycleEventScheduler. It is an implementation of a LifecycleInterceptor
-and can call an action whenever a lifecycle event is happening.
+This is why we introduced the LifecycleEventScheduler. It is an implementation of a LifecycleInterceptor which you need to
+add manually to your MVPFragment/MVPActivity/MVPPresenter using the methods mentioned in the
+LifecycleInterceptor - Section.
 
-Example:
+Here's an example of executing a runnable on stop
 ```
-private static final LifecycleEventScheduler<Subscription> CLEANUP =
-        // define an action that is happening, when an event was triggered
-        new LifecycleEventScheduler<>((event, item) -> item.unsubscribe());
+private static final LifecycleEventScheduler<Runnable> DEMO
+        = new LifecycleEventScheduler<>((event, item) -> item.run());
 
 @Override
 public void onCreate() {
     super.onCreate();
-    // enqueue the action to trigger onStop
-    CLEANUP.enqueue(STOP, getSomeObservable
-            .subscribe(item -> {/* do something */}));
+    // enqueue the action to trigger onStop, in this case it unsubscribes from
+    // a possible active subscription
+    DEMO.enqueue(STOP, () -> Log.e(TAG, "onStop was called"));
+    DEMO.enqueue(RESUME, () -> Log.e(TAG, "onResume was called"));
 }
 ```
+The action will be called ONCE for all events you register an action for. On registering an action
+you have to pass the event itself (predefined integer) and an item you want to do something with.
+
+A sample for auto unsubscribing on rxjava subscriptions you can find in [the demo project](https://github.com/moovel/android-mvp/blob/master/demo/src/main/java/com/moovel/mvp/demo/screens/main/AwesomePresenter.java).
 
 ## LICENSE
 ```
