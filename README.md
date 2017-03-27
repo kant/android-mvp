@@ -132,7 +132,7 @@ LifecycleInterceptor - Section.
 
 Here's an example of executing a runnable on stop
 ```
-private static final LifecycleEventScheduler<Runnable> DEMO
+private final LifecycleEventScheduler<Runnable> lifecycleScheduler
         = new LifecycleEventScheduler<>((event, item) -> item.run());
 
 @Override
@@ -140,14 +140,14 @@ public void onCreate() {
     super.onCreate();
     // enqueue the action to trigger onStop, in this case it unsubscribes from
     // a possible active subscription
-    DEMO.enqueue(STOP, () -> Log.e(TAG, "onStop was called"));
-    DEMO.enqueue(RESUME, () -> Log.e(TAG, "onResume was called"));
+    lifecycleScheduler.enqueue(STOP, () -> Log.e(TAG, "onStop was called"));
+    lifecycleScheduler.enqueue(RESUME, () -> Log.e(TAG, "onResume was called"));
 }
 ```
 The action will be called ONCE for all events you register an action for. On registering an action
 you have to pass the event itself (predefined integer) and an item you want to do something with.
 
-A sample for auto unsubscribing on rxjava subscriptions you can find in [the demo project](https://github.com/moovel/android-mvp/blob/master/demo/src/main/java/com/moovel/mvp/demo/screens/main/AwesomePresenter.java).
+A sample for auto unsubscribing on rxjava subscriptions you can find in [the demo project](demo/src/main/java/com/moovel/mvp/demo/screens/main/AwesomePresenter.java).
 
 ## LICENSE
 ```

@@ -15,7 +15,7 @@ import static com.moovel.mvp.lifecycle.LifecycleEvent.STOP;
 
 public class AwesomePresenter extends MVPPresenter<AwesomeView> {
 
-    private static final LifecycleEventScheduler<Subscription> CLEANUP =
+    private final LifecycleEventScheduler<Subscription> lifecycleScheduler =
             new LifecycleEventScheduler<>((event, item) -> item.unsubscribe());
 
     private final String string;
@@ -23,7 +23,7 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
     @Inject
     public AwesomePresenter(String injectedString) {
         this.string = injectedString;
-        addLifecycleInterceptor(CLEANUP);
+        addLifecycleInterceptor(lifecycleScheduler);
     }
 
     public String getInjectedString() {
@@ -33,7 +33,8 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
     @Override
     public void onCreate() {
         super.onCreate();
-        CLEANUP.enqueue(STOP, Observable.interval(0, 5, TimeUnit.SECONDS)
+        lifecycleScheduler.enqueue(STOP, Observable.interval(0, 5, TimeUnit.SECONDS)
+                // writes a log every 5 seconds until onPause was called
                 .subscribe(item -> getView().log(String.format("Log: %d", item))));
     }
 }
