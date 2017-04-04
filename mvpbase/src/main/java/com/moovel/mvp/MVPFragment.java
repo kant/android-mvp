@@ -78,7 +78,7 @@ public abstract class MVPFragment<VIEW extends MVPView,
             presenter = inject(dependencyGraph);
         }
         presenter.onResume();
-        lifecycleInterceptor.doOnPause();
+        lifecycleInterceptor.doOnResume();
     }
 
     @Override
