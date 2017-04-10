@@ -95,7 +95,7 @@ public abstract class MVPFragment<VIEW extends MVPView,
             componentHash = dependencyGraph.hashCode();
         }
         presenter.onResume();
-        lifecycleInterceptor.doOnPause();
+        lifecycleInterceptor.doOnResume();
     }
 
     @Override
