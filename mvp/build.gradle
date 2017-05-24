@@ -13,19 +13,36 @@ android {
         versionCode 1
         versionName "$version"
     }
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+    }
 }
 
-apply from: '../dependencies.gradle'
+configurations {
+    lintChecks
+}
+
 dependencies {
-    compile libraries.timber
+
     compile libraries.android.support.compat
-
-    compile libraries.dagger.android.support
-
-
 
     testCompile libraries.junit
     testCompile libraries.mockito
+
+    lintChecks project(path: ':mvp-lint', configuration: 'lintChecks')
+}
+
+task copyLintJar(type: Copy) {
+    from(configurations.lintChecks) {
+        rename { 'lint.jar' }
+    }
+    into 'build/intermediates/lint/'
+}
+
+project.afterEvaluate {
+    def compileLintTask = project.tasks.find { it.name == 'compileLint' }
+    compileLintTask.dependsOn(copyLintJar)
 }
 
 apply plugin: 'com.github.ben-manes.versions'

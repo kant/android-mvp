@@ -19,14 +19,6 @@ allprojects {
     repositories {
         // check local
         mavenLocal()
-        // then snapshot
-        maven {
-            url "http://artifactory.moovel.com:8080/artifactory/libs-snapshot-local"
-            credentials {
-                username = project.hasProperty('artifactoryUser') ? project.artifactoryUser : System.getenv('ARTIFACTORY_USER')
-                password = project.hasProperty('artifactoryPass') ? project.artifactoryPass : System.getenv('ARTIFACTORY_PASSWORD')
-            }
-        }
         // bintray
         maven {
             url "http://moovel.bintray.com/android"
@@ -36,9 +28,13 @@ allprojects {
             }
         }
         jcenter()
+        maven {
+            url  "http://dl.bintray.com/android/android-tools"
+        }
+
     }
 }
-
+apply from: 'dependencies.gradle'
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

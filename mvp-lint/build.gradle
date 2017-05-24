@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+configurations {
+    lintChecks
+}
+
+
+dependencies {
+    compile libraries.lint.api
+    compile libraries.lint.checks
+
+    testCompile 'junit:junit:4.11'
+    testCompile 'com.android.tools.lint:lint:25.3.0'
+    testCompile 'com.android.tools.lint:lint-tests:25.3.0'
+    testCompile 'com.android.tools:testutils:25.3.0'
+
+    lintChecks files(jar)
+}
+
+jar {
+    manifest {
+        attributes('Lint-Registry': 'com.moovel.mvp.MVPLintRegisty')
+    }
+}
