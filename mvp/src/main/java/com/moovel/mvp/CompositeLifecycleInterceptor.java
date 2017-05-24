@@ -16,60 +16,63 @@
 
 package com.moovel.mvp;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+
+import java.util.LinkedList;
+import java.util.List;
 
 final class CompositeLifecycleInterceptor implements LifecycleInterceptor {
 
-    private final Set<LifecycleInterceptor> plugins = new HashSet<>();
+    final List<LifecycleInterceptor> interceptors = new LinkedList<>();
 
     public void addLifecycleInterceptor(LifecycleInterceptor plugin) {
-        plugins.add(plugin);
+        interceptors.add(plugin);
     }
 
     public void removeLifecycleInterceptor(LifecycleInterceptor plugin) {
-        plugins.remove(plugin);
+        interceptors.remove(plugin);
     }
+
 
     @Override
     public void doOnCreate() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnCreate();
+        for (int i = 0; i < interceptors.size(); i++) {
+            interceptors.get(i).doOnCreate();
         }
     }
 
     @Override
     public void doOnStart() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnStart();
+        for (int i = 0; i < interceptors.size(); i++) {
+            interceptors.get(i).doOnStart();
         }
     }
 
     @Override
     public void doOnResume() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnResume();
+        for (int i = 0; i < interceptors.size(); i++) {
+            interceptors.get(i).doOnResume();
         }
     }
 
     @Override
     public void doOnPause() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnPause();
+        for (int i = interceptors.size() - 1; i >= 0; i--) {
+            interceptors.get(i).doOnPause();
         }
     }
 
     @Override
     public void doOnStop() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnStop();
+        for (int i = interceptors.size() - 1; i >= 0; i--) {
+            interceptors.get(i).doOnStop();
         }
     }
 
     @Override
     public void doOnDestroy() {
-        for (LifecycleInterceptor interceptor : plugins) {
-            interceptor.doOnDestroy();
+        for (int i = interceptors.size() - 1; i >= 0; i--) {
+            interceptors.get(i).doOnDestroy();
         }
     }
 }

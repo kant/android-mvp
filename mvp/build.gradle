@@ -4,23 +4,30 @@ group 'com.moovel.mvp'
 version "$libraryVersion"
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "$version"
     }
 }
 
+apply from: '../dependencies.gradle'
 dependencies {
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
-    compile "com.jakewharton.timber:timber:$timberVersion"
+    compile libraries.timber
+    compile libraries.android.support.compat
+
+    compile libraries.dagger.android.support
+
+
+
+    testCompile libraries.junit
+    testCompile libraries.mockito
 }
 
 apply plugin: 'com.github.ben-manes.versions'
 apply from: 'maven.gradle'
-apply from: '../snapshot.gradle'
 apply from: '../checkstyle.gradle'

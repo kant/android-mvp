@@ -1,0 +1,85 @@
+ext {
+    versions =
+            [
+                    android  : [
+                            support  : '25.3.1',
+                            contraint: '1.0.2'
+                    ],
+                    dagger   : '2.11-rc2',
+                    google   : [
+                            play: [
+                                    services: '10.2.6'
+                            ]
+                    ],
+
+                    junit    : '4.12',
+                    mockito  : '2.8.9',
+                    okhttp   : [
+                            logginginterceptor: '3.8.0'
+                    ],
+                    rx       : [
+                            java   : '2.1.0',
+                            android: '2.0.1',
+                            network: '0.9.1',
+                    ],
+                    retroauth: '2.2.0',
+                    retrofit : '2.3.0',
+                    timber   : '4.5.1'
+
+            ]
+
+    libraries =
+            [
+                    android  : [
+                            support: [
+                                    cardview  : "com.android.support:cardview-v7:$versions.android.support",
+                                    compat    : "com.android.support:appcompat-v7:$versions.android.support",
+                                    customtabs: "com.android.support:customtabs:$versions.android.support",
+                                    constraint: "com.android.support.constraint:constraint-layout:$versions.android.constraint",
+                                    design    : "com.android.support:design:$versions.android.support",
+                                    recycler  : "com.android.support:recyclerview-v7:$versions.android.support",
+                            ],
+                    ],
+                    dagger   : [
+                            core    : "com.google.dagger:dagger:$versions.dagger",
+                            compiler: "com.google.dagger:dagger-compiler:$versions.dagger",
+
+                            android : [
+                                    support  : "com.google.dagger:dagger-android-support:$versions.dagger",
+                                    processor: "com.google.dagger:dagger-android-processor:$versions.dagger"
+                            ]
+                    ],
+                    firebase : [
+                            crash: "com.google.firebase:firebase-crash:$versions.google.play.services"
+                    ],
+                    google   : [
+                            play: [
+                                    auth: "com.google.android.gms:play-services-auth:$versions.google.play.services"
+                            ]
+                    ],
+
+                    junit    : "junit:junit:$versions.junit",
+                    mockito  : "org.mockito:mockito-core:$versions.mockito",
+
+                    okhttp   : [
+                            logginginterceptor: "com.squareup.okhttp3:logging-interceptor:$versions.okhttp.logginginterceptor"
+                    ],
+                    rx       : [
+                            java   : "io.reactivex.rxjava2:rxjava:$versions.rx.java",
+                            android: "io.reactivex.rxjava2:rxandroid:$versions.rx.android",
+                            network: "com.github.pwittchen:reactivenetwork-rx2:$versions.rx.network"
+                    ],
+                    retroauth: "com.andretietz.retroauth:retroauth-android:$versions.retroauth",
+                    retrofit : [
+                            retrofit  : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+                            converters: [
+                                    moshi: "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+                            ],
+                            adapters  : [
+                                    rxjava2: "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+                            ]
+                    ],
+                    timber   : "com.jakewharton.timber:timber:$versions.timber"
+
+            ]
+}

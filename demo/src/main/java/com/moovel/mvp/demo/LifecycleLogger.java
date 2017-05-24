@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.moovel.mvp.lifecycle;
+package com.moovel.mvp.demo;
 
-import com.moovel.mvp.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleInterceptor;
 
 import timber.log.Timber;
 

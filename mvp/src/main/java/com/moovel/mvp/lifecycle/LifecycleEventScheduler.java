@@ -20,8 +20,6 @@ package com.moovel.mvp.lifecycle;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
-import com.moovel.mvp.LifecycleInterceptor;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +45,7 @@ public final class LifecycleEventScheduler<T> implements LifecycleInterceptor {
     }
 
     /**
-     * Enqueues an item event
+     * Enqueues an item event. This will be executed ONCE
      *
      * @param event when to trigger
      * @param item  that needs to to something
@@ -56,6 +54,7 @@ public final class LifecycleEventScheduler<T> implements LifecycleInterceptor {
         Set<T> ts = container.get(event);
         if (ts == null) ts = new HashSet<>();
         ts.add(item);
+        container.append(event, ts);
     }
 
     @Override

@@ -18,6 +18,8 @@ package com.moovel.mvp;
 
 import android.support.annotation.CallSuper;
 
+import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+
 /**
  * This is the basic presenter, which should be extended by all Presenters.
  *
@@ -39,7 +41,8 @@ public abstract class MVPPresenter<V extends MVPView> {
         return view != null;
     }
 
-    public V getView() {
+    public V getViewOrThrow() throws ViewNotAttachedException {
+        if (view == null) throw new ViewNotAttachedException();
         return view;
     }
 

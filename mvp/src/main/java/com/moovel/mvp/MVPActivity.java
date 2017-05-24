@@ -20,14 +20,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public abstract class MVPActivity<VIEW extends MVPView,
-        PRESENTER extends MVPPresenter<VIEW>,
-        DEPENDENCYGRAPH>
+import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+
+public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
         extends AppCompatActivity {
 
     private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
-    private PRESENTER presenter;
-    private int componentHash = 0;
 
     public MVPActivity() {
         if (!(this instanceof MVPView)) {
@@ -47,77 +45,46 @@ public abstract class MVPActivity<VIEW extends MVPView,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
-        componentHash = dependencyGraph.hashCode();
-        presenter = inject(dependencyGraph);
-        //noinspection unchecked
-        presenter.attachView((VIEW) this);
-        presenter.onCreate();
+        //noinspection unchecked}
+        lifecycleInterceptor.addLifecycleInterceptor(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
         lifecycleInterceptor.doOnCreate();
-    }
-
-    /**
-     * @return the class object of the component, the activity requires
-     */
-    protected abstract Class<DEPENDENCYGRAPH> getComponentClass();
-
-    private DEPENDENCYGRAPH getDependencyGraph() {
-        try {
-            return ((DependencyGraphProvider) getApplication()).getComponent(getComponentClass());
-        } catch (ClassCastException e) {
-            throw new IllegalStateException(String.format("Your Application must implement %s",
-                    DependencyGraphProvider.class.getSimpleName()));
-        }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.onStart();
         lifecycleInterceptor.doOnStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        DEPENDENCYGRAPH dependencyGraph = getDependencyGraph();
-        if (dependencyGraph.hashCode() != componentHash) {
-            presenter = inject(dependencyGraph);
-            componentHash = dependencyGraph.hashCode();
-        }
-        presenter.onResume();
         lifecycleInterceptor.doOnResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
-        presenter.onPause();
         lifecycleInterceptor.doOnPause();
+        super.onPause();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
-        presenter.onStop();
         lifecycleInterceptor.doOnStop();
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-        presenter.detachView();
         lifecycleInterceptor.doOnDestroy();
+        super.onDestroy();
     }
 
     /**
-     * use the component to inject your presenter and return it
+     * use the component to inject your keeper and return it
      *
-     * @param dependencyGraph for dependency injection
-     * @return the presenter
+     * @return the keeper
      */
-    protected abstract PRESENTER inject(DEPENDENCYGRAPH dependencyGraph);
+    protected abstract PRESENTER getPresenter();
 
 }

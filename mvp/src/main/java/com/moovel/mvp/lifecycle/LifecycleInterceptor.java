@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moovel.mvp;
+package com.moovel.mvp.lifecycle;
 
 public interface LifecycleInterceptor {
     void doOnCreate();

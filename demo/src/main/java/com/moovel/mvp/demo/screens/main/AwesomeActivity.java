@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.moovel.mvp.demo.BaseActivity;
-import com.moovel.mvp.demo.injection.AwesomeComponent;
 import com.moovel.mvpbase.demo.R;
 
 import javax.inject.Inject;
@@ -18,21 +17,18 @@ public class AwesomeActivity extends BaseActivity<AwesomeView, AwesomePresenter>
     AwesomePresenter presenter;
 
     @Override
-    public AwesomePresenter inject(AwesomeComponent dependencyGraph) {
-        dependencyGraph.inject(this);
-        return presenter;
-    }
-
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((TextView) findViewById(R.id.text)).setText(presenter.getInjectedString());
     }
 
     @Override
-    public void log(String logthis) {
-        Log.d(TAG, logthis);
+    protected AwesomePresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void showText(String text) {
+        ((TextView) findViewById(R.id.text)).setText(text);
     }
 }

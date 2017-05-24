@@ -1,19 +1,31 @@
 package com.moovel.mvp.demo;
 
-import com.moovel.mvp.MVPApplication;
-import com.moovel.mvp.demo.injection.AwesomeComponent;
-import com.moovel.mvp.demo.injection.AwesomeModule;
+import android.app.Activity;
+import android.app.Application;
+
 import com.moovel.mvp.demo.injection.DaggerAwesomeComponent;
 
-public class AwesomeApplication extends MVPApplication {
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import timber.log.Timber;
+
+public class AwesomeApplication extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> injector;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        registerComponent(AwesomeComponent.class, DaggerAwesomeComponent
-                .builder()
-                .awesomeModule(new AwesomeModule())
-                .build());
+        Timber.plant(new Timber.DebugTree());
+        DaggerAwesomeComponent.create().inject(this);
     }
 
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return injector;
+    }
 }
