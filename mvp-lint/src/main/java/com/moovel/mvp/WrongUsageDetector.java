@@ -27,8 +27,8 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
             "Views are bound in the onStart method and unbound in the onStop Method. Usage at this location will cause" +
                     "the method to throw an ViewNotAttachedException.",
             Category.MESSAGES,
-            10,
-            Severity.FATAL,
+            8,
+            Severity.ERROR,
             new Implementation(WrongUsageDetector.class, Scope.JAVA_FILE_SCOPE)
 
     );
