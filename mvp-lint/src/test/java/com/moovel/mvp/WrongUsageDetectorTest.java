@@ -10,11 +10,14 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.google.common.truth.Truth.assertThat;
-
+@SuppressWarnings({"ClassNameDiffersFromFileName", "JUnit4AnnotatedMethodInJUnit3TestCase"})
 public class WrongUsageDetectorTest extends LintDetectorTest {
 
-    @Language("JAVA") String presenterStubString = ""
+
+    private static final String NO_WARNING = "No warnings.";
+
+    @Language("JAVA")
+    String presenterStubString = ""
             + "package com.moovel.mvp;\n" +
             "public class MVPPresenter {\n" +
             "    public MVPPresenter() {}\n" +
@@ -41,23 +44,101 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
 
     @Override
     protected List<Issue> getIssues() {
-        return Arrays.asList(WrongUsageDetector.ISSUE_VIEW_USAGE_IN_CREATE);
+        return Arrays.asList(WrongUsageDetector.getIssues());
+    }
+
+
+    @Test
+    public void testOnNoGetViewMethodCall() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onCreate() {}\n" +
+                "    protected void onStart() {}\n" +
+                "    protected void onResume() {}\n" +
+                "    protected void onPause() {}\n" +
+                "    protected void onStop() {}\n" +
+                "    protected void onDestroy() {}\n" +
+                "}";
+        assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
     }
 
     @Test
-    public void testSmth() throws Exception {
+    public void testErrorOnCreateMethod() throws Exception {
         @Language("JAVA") String source = ""
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onCreate() {\n" +
-                "        super.onCreate();\n" +
                 "        getViewOrThrow();\n" +
                 "    }\n" +
                 "}";
-        assertEquals("src/com/moovel/mvp/Presenter.java:5: Error: Test message [UnboundViewUsage]\n" +
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Test message [UnboundViewUsage]\n" +
                 "        getViewOrThrow();\n" +
                 "        ~~~~~~~~~~~~~~~~\n" +
                 "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnDestroyMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onDestroy() {\n" +
+                "        getViewOrThrow();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Test message [UnboundViewUsage]\n" +
+                "        getViewOrThrow();\n" +
+                "        ~~~~~~~~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnStartMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onStart() {\n" +
+                "        getViewOrThrow();\n" +
+                "    }\n" +
+                "}";
+        assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnStopMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onStop() {\n" +
+                "        getViewOrThrow();\n" +
+                "    }\n" +
+                "}";
+        assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnPauseMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onPause() {\n" +
+                "        getViewOrThrow();\n" +
+                "    }\n" +
+                "}";
+        assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnResumeMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onResume() {\n" +
+                "        getViewOrThrow();\n" +
+                "    }\n" +
+                "}";
+        assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
     }
 }
 
