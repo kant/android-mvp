@@ -23,7 +23,7 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
 
     static final Issue ISSUE_VIEW_USAGE_IN_CREATE = Issue.create(
             "UnboundViewUsage",
-            "You try using a view which cannot be bound there.",
+            "Using a view which is not bound at this point",
             "Views are bound in the onStart method and unbound in the onStop Method. Usage at this location will cause" +
                     "the method to throw an ViewNotAttachedException.",
             Category.MESSAGES,
@@ -76,7 +76,8 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
         if (containingClass != null && "com.moovel.mvp.MVPPresenter".equals(containingClass.getQualifiedName())) {
             // check if any parent method is onCreate
             if (wasCalledInUnboundAreas(call) && "com.moovel.mvp.MVPPresenter.getViewOrThrow".equals(methodName)) {
-                context.report(ISSUE_VIEW_USAGE_IN_CREATE, call, context.getLocation(call), "Test message");
+                context.report(ISSUE_VIEW_USAGE_IN_CREATE, call, context.getLocation(call),
+                        "Pointless call to getViewOrThrow");
             }
         }
     }
