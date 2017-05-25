@@ -18,7 +18,7 @@ package com.moovel.mvp;
 
 import android.support.annotation.CallSuper;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 /**
  * This is the basic presenter, which should be extended by all Presenters.
@@ -26,7 +26,7 @@ import com.moovel.mvp.lifecycle.LifecycleInterceptor;
  * @param <V> View to handle within this presenter
  */
 public abstract class MVPPresenter<V extends MVPView> {
-    private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
+    private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
     private V view;
 
     public void attachView(V mvpView) {
@@ -46,12 +46,12 @@ public abstract class MVPPresenter<V extends MVPView> {
         return view;
     }
 
-    public void addLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.addLifecycleInterceptor(interceptor);
+    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
+        observer.addLifecycleInterceptor(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
+    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
+        observer.removeLifecycleInterceptor(interceptor);
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onCreate() {
-        lifecycleInterceptor.doOnCreate();
+        observer.doOnCreate();
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onStart() {
-        lifecycleInterceptor.doOnStart();
+        observer.doOnStart();
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onResume() {
-        lifecycleInterceptor.doOnResume();
+        observer.doOnResume();
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onPause() {
-        lifecycleInterceptor.doOnPause();
+        observer.doOnPause();
     }
 
     /**
@@ -91,7 +91,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onStop() {
-        lifecycleInterceptor.doOnStop();
+        observer.doOnStop();
     }
 
     /**
@@ -100,7 +100,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onDestroy() {
-        lifecycleInterceptor.doOnDestroy();
+        observer.doOnDestroy();
     }
 
 }

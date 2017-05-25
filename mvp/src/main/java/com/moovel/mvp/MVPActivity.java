@@ -20,12 +20,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
         extends AppCompatActivity {
 
-    private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
+    private final CompositeLifecycleObserver lifecycleInterceptor = new CompositeLifecycleObserver();
 
     public MVPActivity() {
         if (!(this instanceof MVPView)) {
@@ -34,11 +34,11 @@ public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPre
         }
     }
 
-    public void addLifecycleInterceptor(LifecycleInterceptor interceptor) {
+    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
         lifecycleInterceptor.addLifecycleInterceptor(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
+    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
         lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
     }
 

@@ -14,7 +14,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReferenceExpression;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -30,7 +30,6 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
             8,
             Severity.ERROR,
             new Implementation(WrongUsageDetector.class, Scope.JAVA_FILE_SCOPE)
-
     );
 
     public WrongUsageDetector() {
@@ -51,33 +50,34 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
         }
     }
 
-    static boolean wasCalledInUnboundAreas(PsiElement method) {
-        if (method == null) return false;
-        if (method instanceof PsiMethod && "onCreate".equals(((PsiMethod) method).getName())) return true;
-        if (method instanceof PsiMethod && "onDestroy".equals(((PsiMethod) method).getName())) return true;
-        return wasCalledInUnboundAreas(findMethodCall(method.getParent()));
+    static boolean wasCalledInUnboundAreas(PsiElement element) {
+        if (element == null) return false;
+        if (element instanceof PsiMethod) {
+            PsiMethod method = (PsiMethod) element;
+            if ("onCreate".equals(method.getName()) || "onDestroy".equals(method.getName())) {
+                return true;
+            }
+        }
+        return wasCalledInUnboundAreas(findMethodCall(element.getParent()));
     }
 
     @Override
     public List<String> getApplicableMethodNames() {
-        return Arrays.asList("getViewOrThrow");
+        return Collections.singletonList("getViewOrThrow");
     }
 
     @Override
-    public void visitMethod(JavaContext context, JavaElementVisitor visitor, PsiMethodCallExpression call, PsiMethod method) {
+    public void visitMethod(JavaContext context, JavaElementVisitor visitor,
+                            PsiMethodCallExpression call, PsiMethod method) {
         PsiReferenceExpression methodExpression = call.getMethodExpression();
         String methodName = methodExpression.getQualifiedName();
         // check if subclass of MVPPresenter
         PsiClass containingClass = method.getContainingClass();
         if (containingClass != null && "com.moovel.mvp.MVPPresenter".equals(containingClass.getQualifiedName())) {
             // check if any parent method is onCreate
-            if (wasCalledInUnboundAreas(call)) {
-                if ("com.moovel.mvp.MVPPresenter.getViewOrThrow".equals(methodName)) {
-                    context.report(ISSUE_VIEW_USAGE_IN_CREATE, call, context.getLocation(call), "Test message");
-                    return;
-                }
+            if (wasCalledInUnboundAreas(call) && "com.moovel.mvp.MVPPresenter.getViewOrThrow".equals(methodName)) {
+                context.report(ISSUE_VIEW_USAGE_IN_CREATE, call, context.getLocation(call), "Test message");
             }
-
         }
     }
 }

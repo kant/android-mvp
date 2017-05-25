@@ -30,11 +30,11 @@ import static com.moovel.mvp.lifecycle.LifecycleEvent.RESUME;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.START;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.STOP;
 
-public final class LifecycleEventScheduler<T> implements LifecycleInterceptor {
+public final class LifecycleEventScheduler<T> implements LifecycleObserver {
 
-    private final LifecycleEventListener<T> eventListener;
+    final LifecycleEventListener<T> eventListener;
 
-    private final SparseArray<Set<T>> container;
+    final SparseArray<Set<T>> container;
 
     /**
      * @param eventListener will be called once foreach enqueued item event

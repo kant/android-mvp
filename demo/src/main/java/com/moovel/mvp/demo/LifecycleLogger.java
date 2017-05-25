@@ -16,11 +16,11 @@
 
 package com.moovel.mvp.demo;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import timber.log.Timber;
 
-public final class LifecycleLogger implements LifecycleInterceptor {
+public final class LifecycleLogger implements LifecycleObserver {
 
     private final String className;
 

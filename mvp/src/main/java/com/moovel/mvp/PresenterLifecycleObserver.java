@@ -1,8 +1,9 @@
 package com.moovel.mvp;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
-class PresenterLifecycleObserver<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>> implements LifecycleInterceptor {
+class PresenterLifecycleObserver<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
+        implements LifecycleObserver {
 
     private final PRESENTER presenter;
     private final VIEW view;

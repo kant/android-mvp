@@ -16,7 +16,7 @@
 
 package com.moovel.mvp.lifecycle;
 
-public interface LifecycleInterceptor {
+public interface LifecycleObserver {
     void doOnCreate();
     void doOnStart();
     void doOnResume();

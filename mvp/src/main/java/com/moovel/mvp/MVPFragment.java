@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 /**
  * Every Fragment should extend the MVPFragment, which provides some mvp base functionalities
@@ -28,7 +28,7 @@ import com.moovel.mvp.lifecycle.LifecycleInterceptor;
 public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
         extends Fragment {
 
-    private final CompositeLifecycleInterceptor lifecycleInterceptor = new CompositeLifecycleInterceptor();
+    private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
 
     public MVPFragment() {
         if (!(this instanceof MVPView)) {
@@ -37,49 +37,49 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
         }
     }
 
-    public void addLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.addLifecycleInterceptor(interceptor);
+    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
+        observer.addLifecycleInterceptor(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleInterceptor interceptor) {
-        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
+    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
+        observer.removeLifecycleInterceptor(interceptor);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked
-        lifecycleInterceptor.addLifecycleInterceptor(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
-        lifecycleInterceptor.doOnCreate();
+        observer.addLifecycleInterceptor(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
+        observer.doOnCreate();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        lifecycleInterceptor.doOnStart();
+        observer.doOnStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        lifecycleInterceptor.doOnResume();
+        observer.doOnResume();
     }
 
     @Override
     public void onPause() {
-        lifecycleInterceptor.doOnPause();
+        observer.doOnPause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        lifecycleInterceptor.doOnStop();
+        observer.doOnStop();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        lifecycleInterceptor.doOnDestroy();
+        observer.doOnDestroy();
         super.onDestroy();
     }
 

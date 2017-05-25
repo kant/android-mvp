@@ -16,63 +16,63 @@
 
 package com.moovel.mvp;
 
-import com.moovel.mvp.lifecycle.LifecycleInterceptor;
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import java.util.LinkedList;
 import java.util.List;
 
-final class CompositeLifecycleInterceptor implements LifecycleInterceptor {
+final class CompositeLifecycleObserver implements LifecycleObserver {
 
-    final List<LifecycleInterceptor> interceptors = new LinkedList<>();
+    final List<LifecycleObserver> observers = new LinkedList<>();
 
-    public void addLifecycleInterceptor(LifecycleInterceptor plugin) {
-        interceptors.add(plugin);
+    public void addLifecycleInterceptor(LifecycleObserver plugin) {
+        observers.add(plugin);
     }
 
-    public void removeLifecycleInterceptor(LifecycleInterceptor plugin) {
-        interceptors.remove(plugin);
+    public void removeLifecycleInterceptor(LifecycleObserver plugin) {
+        observers.remove(plugin);
     }
 
 
     @Override
     public void doOnCreate() {
-        for (int i = 0; i < interceptors.size(); i++) {
-            interceptors.get(i).doOnCreate();
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).doOnCreate();
         }
     }
 
     @Override
     public void doOnStart() {
-        for (int i = 0; i < interceptors.size(); i++) {
-            interceptors.get(i).doOnStart();
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).doOnStart();
         }
     }
 
     @Override
     public void doOnResume() {
-        for (int i = 0; i < interceptors.size(); i++) {
-            interceptors.get(i).doOnResume();
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).doOnResume();
         }
     }
 
     @Override
     public void doOnPause() {
-        for (int i = interceptors.size() - 1; i >= 0; i--) {
-            interceptors.get(i).doOnPause();
+        for (int i = observers.size() - 1; i >= 0; i--) {
+            observers.get(i).doOnPause();
         }
     }
 
     @Override
     public void doOnStop() {
-        for (int i = interceptors.size() - 1; i >= 0; i--) {
-            interceptors.get(i).doOnStop();
+        for (int i = observers.size() - 1; i >= 0; i--) {
+            observers.get(i).doOnStop();
         }
     }
 
     @Override
     public void doOnDestroy() {
-        for (int i = interceptors.size() - 1; i >= 0; i--) {
-            interceptors.get(i).doOnDestroy();
+        for (int i = observers.size() - 1; i >= 0; i--) {
+            observers.get(i).doOnDestroy();
         }
     }
 }
