@@ -1,16 +1,14 @@
 package com.moovel.mvp.demo.screens.main;
 
-import android.util.Log;
-
 import com.moovel.mvp.MVPPresenter;
 import com.moovel.mvp.ViewNotAttachedException;
 import com.moovel.mvp.demo.LifecycleLogger;
 import com.moovel.mvp.lifecycle.LifecycleEventScheduler;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,7 +17,6 @@ import timber.log.Timber;
 
 import static com.moovel.mvp.lifecycle.LifecycleEvent.STOP;
 
-@Singleton
 public class AwesomePresenter extends MVPPresenter<AwesomeView> {
 
     private static final String TAG = AwesomePresenter.class.getSimpleName();
@@ -43,7 +40,7 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
         super.onStart();
         // view is now attached
         try {
-            getViewOrThrow().showText(String.format("Log: %s %d", string, ++counter));
+            getViewOrThrow().showText(String.format(Locale.getDefault(), "Log: %s %d", string, ++counter));
         } catch (ViewNotAttachedException e) {
             Timber.e(e);
         }
@@ -53,10 +50,9 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
                 // writes a log every 5 seconds until onPause was called
                 .subscribe(item -> {
                     try {
-                        getViewOrThrow().showText(String.format("Log: %s %d", string, ++counter));
+                        getViewOrThrow().showText(String.format(Locale.getDefault(), "Log: %s %d", string, ++counter));
                     } catch (ViewNotAttachedException e) {
-                        // ignore
-                        Log.e(TAG, "Error: ", e);
+                        Timber.i(e);
                     }
                 }));
     }
