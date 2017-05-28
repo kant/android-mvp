@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moovel.mvp.demo;
+package com.moovel.demo;
 
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 

@@ -13,10 +13,10 @@ dependencies {
     compile libraries.lint.api
     compile libraries.lint.checks
 
-    testCompile 'junit:junit:4.11'
-    testCompile 'com.android.tools.lint:lint:25.3.1'
-    testCompile 'com.android.tools.lint:lint-tests:25.3.1'
-    testCompile 'com.android.tools:testutils:25.3.1'
+    testCompile libraries.junit
+    testCompile libraries.lint.lint
+    testCompile libraries.lint.tests
+    testCompile libraries.lint.testutils
 
     lintChecks files(jar)
 }

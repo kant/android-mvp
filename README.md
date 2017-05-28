@@ -1,7 +1,6 @@
 # MVP Framework for Android Applications
 
-This framework is an Android-Framework to get Dependency Injection and MVP working smoothly together. It's mainly for
-dagger2 but you can use it with other DI libraries too, it's not depending on any.
+This framework is an Android-Framework for MVP. The Demo shows how to use it in combination with dependency
 
 Dependencies:
 Android Support-Library v22.2.0

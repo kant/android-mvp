@@ -2,7 +2,7 @@ ext {
     versions =
             [
                     android  : [
-                            support  : '25.3.1',
+                            support  : '22.3.1',
                             contraint: '1.0.2',
                     ],
                     dagger   : '2.11-rc2',
@@ -13,7 +13,7 @@ ext {
                     ],
 
                     junit    : '4.12',
-                    lint     : '25.3.0',
+                    lint     : '25.3.1',
                     mockito  : '2.8.9',
                     okhttp   : [
                             logginginterceptor: '3.8.0'
@@ -62,8 +62,11 @@ ext {
                     junit    : "junit:junit:$versions.junit",
                     lint     : [
 
-                            api   : "com.android.tools.lint:lint-api:$versions.android.support",
-                            checks: "com.android.tools.lint:lint-checks:$versions.android.support"
+                            lint     : "com.android.tools.lint:lint:$versions.lint",
+                            tests    : "com.android.tools.lint:lint-tests:$versions.lint",
+                            api      : "com.android.tools.lint:lint-api:$versions.lint",
+                            checks   : "com.android.tools.lint:lint-checks:$versions.lint",
+                            testutils: "com.android.tools:testutils:$versions.lint"
                     ],
                     mockito  : "org.mockito:mockito-core:$versions.mockito",
 

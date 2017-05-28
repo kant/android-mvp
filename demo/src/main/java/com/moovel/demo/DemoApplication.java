@@ -1,9 +1,9 @@
-package com.moovel.mvp.demo;
+package com.moovel.demo;
 
 import android.app.Activity;
 import android.app.Application;
 
-import com.moovel.mvp.demo.injection.DaggerAwesomeComponent;
+import com.moovel.demo.injection.DaggerDemoApplicationComponent;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 
-public class AwesomeApplication extends Application implements HasActivityInjector {
+public class DemoApplication extends Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> injector;
@@ -21,7 +21,7 @@ public class AwesomeApplication extends Application implements HasActivityInject
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
-        DaggerAwesomeComponent.create().inject(this);
+        DaggerDemoApplicationComponent.create().inject(this);
     }
 
     @Override
