@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -19,21 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
-
+    compile project(':mvp')
     // Dagger
     compile libraries.dagger.core
     compile libraries.dagger.android.support
 
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
-
-    compile project(':mvp-dagger')
 }

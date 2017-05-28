@@ -8,33 +8,15 @@ Android Support-Library v22.2.0
 
 Then add the library to your dependencies:
 ```
-compile 'com.moovel.mvp:mvp:0.1.0-SNAPSHOT'
+compile 'com.moovel.mvp:mvp:0.1.0'
 ```
 
 # How to use it
 DI Frameworks usually provide a Dependency Graph. In Dagger2 this is called "Component". This is why in all our examples
 we're using this terminology.
 
-### 1. Provide a DependencyGraphProvider
 
-Let your Application-class extend MVPApplication would be the easiest way of providing a DependencyGraphProvider.
-If you cannot do this for some reason let your Application class implement the interface DependencyGraphProvider.
-
-```
-    /**
-     * registers a component for injection
-     */
-    public <T> void registerComponent(Class<T> componentClass, T component);
-
-    /**
-     * @param componentClass to receive
-     * @throws IllegalStateException when the component is not registered
-     */
-    public <T> T getComponent(Class<T> componentClass);
-```
-
-
-### 2. Create a View and a Presenter for each screen you have
+### 1. Create a View and a Presenter for each screen you have
 Create a basic view interface
 ```
 public interface AwesomeView extends MVPView {
@@ -54,49 +36,20 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
 
 ### 3. Create your screens
 Extend your Fragment from MVPFragment or your Activity from MVPActivity. These are
-generic classes using 3 generic types. The first one is the view interface it's supposed to implement.
-The second one is the presenter that's provided by the screen and the third one is the Class of the DependencyGraph (Component)
-required.
+generic classes using 2 generic types. The first one is the view interface it's supposed to implement.
+The second one is the presenter that's provided by the screen.
 Here an example for an activity:
 
 
 ```
-public class AwesomeActivity extends MVPActivity<
-    AwesomeView,
-    AwesomePresenter,
-    AwesomeComponent> implements AwesomeView {
+public class AwesomeActivity extends MVPActivity<AwesomeView, AwesomePresenter> 
+    implements AwesomeView {
 
     @Inject
     AwesomePresenter presenter;
 
-    ...
-
-    @Override
-    protected AwesomePresenter inject(AwesomeComponent component) {
-        component.inject(this);
-        return presenter;
-    }
-
-    @Override
-    protected Class<AwesomeComponent> getComponentClass() {
-        return AwesomeComponent.class;
-    }
-}
 ```
 
-### 4. Create your DependencyGraph
-```
-public AwesomeApplication extends MVPApplication {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        registerComponent(AwesomeComponent.class, DaggerAwesomeComponent
-                .builder()
-                .awesomeModule(new AwesomeModule())
-                .build());
-    }
-}
-```
 
 Now you should be able to start your app and use a straight forward MVP pattern.
 

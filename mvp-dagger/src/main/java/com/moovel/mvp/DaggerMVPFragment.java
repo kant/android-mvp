@@ -16,8 +16,26 @@
 
 package com.moovel.mvp;
 
-public class ViewNotAttachedException extends Exception {
-    public ViewNotAttachedException() {
-        super("The view was not attached. Note that the view is attached in onStart and detached in onStop");
+import android.content.Context;
+
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
+
+public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
+        extends MVPFragment<VIEW, PRESENTER> {
+
+    @Inject
+    PRESENTER presenter;
+
+    @Override
+    protected PRESENTER getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
     }
 }

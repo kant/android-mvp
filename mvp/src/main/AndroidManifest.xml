@@ -1,6 +1,4 @@
-<manifest
-    package="com.moovel.mvp">
+<manifest package="com.moovel.mvp">
 
     <application/>
-
 </manifest>

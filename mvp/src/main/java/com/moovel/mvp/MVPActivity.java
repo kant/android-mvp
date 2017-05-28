@@ -25,7 +25,7 @@ import com.moovel.mvp.lifecycle.LifecycleObserver;
 public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
         extends AppCompatActivity {
 
-    private final CompositeLifecycleObserver lifecycleInterceptor = new CompositeLifecycleObserver();
+    private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
 
     public MVPActivity() {
         if (!(this instanceof MVPView)) {
@@ -34,49 +34,49 @@ public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPre
         }
     }
 
-    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
-        lifecycleInterceptor.addLifecycleInterceptor(interceptor);
+    public void addLifecycleObserver(LifecycleObserver interceptor) {
+        observer.addLifecycleObserver(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
-        lifecycleInterceptor.removeLifecycleInterceptor(interceptor);
+    public void removeLifecycleObserver(LifecycleObserver interceptor) {
+        observer.removeLifecycleObserver(interceptor);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked}
-        lifecycleInterceptor.addLifecycleInterceptor(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
-        lifecycleInterceptor.doOnCreate();
+        observer.addLifecycleObserver(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
+        observer.doOnCreate();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        lifecycleInterceptor.doOnStart();
+        observer.doOnStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        lifecycleInterceptor.doOnResume();
+        observer.doOnResume();
     }
 
     @Override
     protected void onPause() {
-        lifecycleInterceptor.doOnPause();
+        observer.doOnPause();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        lifecycleInterceptor.doOnStop();
+        observer.doOnStop();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        lifecycleInterceptor.doOnDestroy();
+        observer.doOnDestroy();
         super.onDestroy();
     }
 

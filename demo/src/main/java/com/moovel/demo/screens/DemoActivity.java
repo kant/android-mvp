@@ -5,20 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import com.andretietz.demolib.BaseActivity;
 import com.andretietz.demolib.model.ActivityObject;
 import com.andretietz.demolib.model.ApplicationObject;
 import com.andretietz.demolib.screens.DemoLibraryActivity;
+import com.moovel.mvp.DaggerMVPActivity;
 import com.moovel.demo.R;
 
-public class DemoActivity extends BaseActivity<DemoView, DemoPresenter> implements DemoView {
+public class DemoActivity extends DaggerMVPActivity<DemoView, DemoPresenter> implements DemoView {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.button).setOnClickListener(v -> presenter.onButtonClicked());
+        findViewById(R.id.button).setOnClickListener(v -> getPresenter().onButtonClicked());
     }
 
     @Override

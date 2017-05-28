@@ -37,19 +37,19 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
         }
     }
 
-    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
-        observer.addLifecycleInterceptor(interceptor);
+    public void addLifecycleObserver(LifecycleObserver interceptor) {
+        observer.addLifecycleObserver(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
-        observer.removeLifecycleInterceptor(interceptor);
+    public void removeLifecycleObserver(LifecycleObserver interceptor) {
+        observer.removeLifecycleObserver(interceptor);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked
-        observer.addLifecycleInterceptor(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
+        observer.addLifecycleObserver(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
         observer.doOnCreate();
     }
 

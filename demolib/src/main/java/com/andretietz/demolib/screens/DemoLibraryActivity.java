@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import com.andretietz.demolib.BaseActivity;
 import com.andretietz.demolib.R;
 import com.andretietz.demolib.model.ActivityObject;
 import com.andretietz.demolib.model.ApplicationObject;
+import com.moovel.mvp.DaggerMVPActivity;
 
-public class DemoLibraryActivity extends BaseActivity<DemoLibraryActivityView, DemoLibraryActivityPresenter>
+public class DemoLibraryActivity extends DaggerMVPActivity<DemoLibraryActivityView, DemoLibraryActivityPresenter>
         implements DemoLibraryActivityView {
 
     @Override

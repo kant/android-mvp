@@ -46,12 +46,12 @@ public abstract class MVPPresenter<V extends MVPView> {
         return view;
     }
 
-    public void addLifecycleInterceptor(LifecycleObserver interceptor) {
-        observer.addLifecycleInterceptor(interceptor);
+    public void addLifecycleObserver(LifecycleObserver interceptor) {
+        observer.addLifecycleObserver(interceptor);
     }
 
-    public void removeLifecycleInterceptor(LifecycleObserver interceptor) {
-        observer.removeLifecycleInterceptor(interceptor);
+    public void removeLifecycleObserver(LifecycleObserver interceptor) {
+        observer.removeLifecycleObserver(interceptor);
     }
 
     /**

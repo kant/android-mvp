@@ -22,20 +22,20 @@ public class CompositeLifecycleObserverTest {
         LifecycleObserver observer3 = Mockito.mock(LifecycleObserver.class);
 
 
-        observers.addLifecycleInterceptor(observer1);
-        observers.addLifecycleInterceptor(observer2);
-        observers.addLifecycleInterceptor(observer3);
+        observers.addLifecycleObserver(observer1);
+        observers.addLifecycleObserver(observer2);
+        observers.addLifecycleObserver(observer3);
 
         assertEquals(3, observers.observers.size());
 
-        observers.removeLifecycleInterceptor(observer1);
-        observers.removeLifecycleInterceptor(observer1);
-        observers.removeLifecycleInterceptor(observer1);
+        observers.removeLifecycleObserver(observer1);
+        observers.removeLifecycleObserver(observer1);
+        observers.removeLifecycleObserver(observer1);
 
         assertEquals(2, observers.observers.size());
 
-        observers.removeLifecycleInterceptor(observer2);
-        observers.removeLifecycleInterceptor(observer3);
+        observers.removeLifecycleObserver(observer2);
+        observers.removeLifecycleObserver(observer3);
 
         assertEquals(0, observers.observers.size());
     }
@@ -45,8 +45,8 @@ public class CompositeLifecycleObserverTest {
         CompositeLifecycleObserver observers = new CompositeLifecycleObserver();
         LifecycleObserver observer1 = Mockito.mock(LifecycleObserver.class);
         LifecycleObserver observer2 = Mockito.mock(LifecycleObserver.class);
-        observers.addLifecycleInterceptor(observer1);
-        observers.addLifecycleInterceptor(observer2);
+        observers.addLifecycleObserver(observer1);
+        observers.addLifecycleObserver(observer2);
 
         observers.doOnCreate();
         observers.doOnStart();
@@ -74,8 +74,8 @@ public class CompositeLifecycleObserverTest {
         CompositeLifecycleObserver observers = new CompositeLifecycleObserver();
         LifecycleObserver observer1 = Mockito.mock(LifecycleObserver.class);
         LifecycleObserver observer2 = Mockito.mock(LifecycleObserver.class);
-        observers.addLifecycleInterceptor(observer1);
-        observers.addLifecycleInterceptor(observer2);
+        observers.addLifecycleObserver(observer1);
+        observers.addLifecycleObserver(observer2);
 
         observers.doOnCreate();
         observers.doOnStart();

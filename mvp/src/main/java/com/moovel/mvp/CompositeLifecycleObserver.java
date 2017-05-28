@@ -25,11 +25,11 @@ final class CompositeLifecycleObserver implements LifecycleObserver {
 
     final List<LifecycleObserver> observers = new LinkedList<>();
 
-    public void addLifecycleInterceptor(LifecycleObserver plugin) {
+    public void addLifecycleObserver(LifecycleObserver plugin) {
         observers.add(plugin);
     }
 
-    public void removeLifecycleInterceptor(LifecycleObserver plugin) {
+    public void removeLifecycleObserver(LifecycleObserver plugin) {
         observers.remove(plugin);
     }
 
