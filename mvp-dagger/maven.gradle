@@ -15,13 +15,13 @@ bintray {
     pkg {
         repo = 'android'
         userOrg = 'moovel'
-        name = 'mvp'
-        desc = 'This is the moovel mvp project for android'
+        name = 'mvp-dagger'
+        desc = 'This is the moovel mvp-dagger project for android'
         websiteUrl = siteUrl
         issueTrackerUrl = issuesUrl
         vcsUrl = codeRepositoryUrl
         licenses = []
-        labels = ['moovel', 'sdk', 'book', 'android', 'mvpbase']
+        labels = ['moovel', 'sdk', 'book', 'android', 'mvpbase', 'dagger', 'DI']
     }
 }
 

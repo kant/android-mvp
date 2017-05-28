@@ -16,6 +16,7 @@ android {
     lintOptions {
         textReport true
         textOutput 'stdout'
+        disable "GradleDependency", "OldTargetApi"
     }
 }
 

@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+group 'com.moovel.mvp'
+version "$libraryVersion"
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -30,3 +33,7 @@ dependencies {
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
 }
+
+apply plugin: 'com.github.ben-manes.versions'
+apply from: 'maven.gradle'
+apply from: '../checkstyle.gradle'
