@@ -101,8 +101,10 @@ public void onCreate() {
 Note that the action will be called ONCE for all events you register an action for. On registering an action
 you have to pass the [event name](mvp/src/main/java/com/moovel/mvp/lifecycle/LifecycleEvent.java) and an item you want to do something with.
 
-A sample for auto unsubscribing on rxjava subscriptions you can find in [the demo project](demo/src/main/java/com/moovel/mvp/demo/screens/main/AwesomePresenter.java).
 
+# Dagger 2 Extension
+To simplyfy our lifes, when using dagger 2, we wrote an implementation, that simplifies presenter injections.
+[Dagger Extension](mvp-dagger/)
 ## LICENSE
 ```
 Copyrights 2017 moovel Group GmbH
