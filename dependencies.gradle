@@ -5,7 +5,7 @@ ext {
                             support  : '22.3.1',
                             contraint: '1.0.2',
                     ],
-                    dagger   : '2.11-rc2',
+                    dagger   : '2.11',
                     google   : [
                             play: [
                                     services: '10.2.6'

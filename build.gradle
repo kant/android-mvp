@@ -19,19 +19,7 @@ allprojects {
     repositories {
         // check local
         mavenLocal()
-        // bintray
-        maven {
-            url "http://moovel.bintray.com/android"
-            credentials {
-                username project.hasProperty('bintrayUser') ? project.bintrayUser : System.getenv('BINTRAY_USER')
-                password project.hasProperty('bintrayKey') ? project.bintrayKey : System.getenv('BINTRAY_PASSWORD')
-            }
-        }
         jcenter()
-        maven {
-            url  "http://dl.bintray.com/android/android-tools"
-        }
-
     }
 }
 apply from: 'dependencies.gradle'

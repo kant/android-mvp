@@ -13,7 +13,7 @@ bintray {
     configurations = ['archives']
     publish = true
     pkg {
-        repo = 'android'
+        repo = 'android-public'
         userOrg = 'moovel'
         name = 'mvp-dagger'
         desc = 'This is the moovel mvp-dagger project for android'
