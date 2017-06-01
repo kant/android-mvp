@@ -26,3 +26,5 @@ jar {
         attributes('Lint-Registry': 'com.moovel.mvp.MVPLintRegistry')
     }
 }
+
+apply plugin: 'com.github.ben-manes.versions'

@@ -72,7 +72,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 "        getViewOrThrow();\n" +
                 "    }\n" +
                 "}";
-        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Test message [UnboundViewUsage]\n" +
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getViewOrThrow [UnboundViewUsage]\n" +
                 "        getViewOrThrow();\n" +
                 "        ~~~~~~~~~~~~~~~~\n" +
                 "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
@@ -87,7 +87,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 "        getViewOrThrow();\n" +
                 "    }\n" +
                 "}";
-        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Test message [UnboundViewUsage]\n" +
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getViewOrThrow [UnboundViewUsage]\n" +
                 "        getViewOrThrow();\n" +
                 "        ~~~~~~~~~~~~~~~~\n" +
                 "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
