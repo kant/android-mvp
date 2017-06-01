@@ -2,7 +2,7 @@ ext {
     versions =
             [
                     android  : [
-                            support  : '22.3.1',
+                            support  : '25.3.1',
                             contraint: '1.0.2',
                     ],
                     dagger   : '2.11',
@@ -13,7 +13,7 @@ ext {
                     ],
 
                     junit    : '4.12',
-                    lint     : '25.3.1',
+                    lint     : '26.0.0-alpha2',
                     mockito  : '2.8.9',
                     okhttp   : [
                             logginginterceptor: '3.8.0'
