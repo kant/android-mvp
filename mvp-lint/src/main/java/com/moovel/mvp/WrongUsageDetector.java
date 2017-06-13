@@ -14,7 +14,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.intellij.psi.PsiReferenceExpression;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -63,7 +63,7 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
 
     @Override
     public List<String> getApplicableMethodNames() {
-        return Collections.singletonList("getViewOrThrow");
+        return Arrays.asList("getView");
     }
 
     @Override

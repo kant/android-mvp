@@ -37,11 +37,7 @@ public abstract class MVPPresenter<V extends MVPView> {
         view = null;
     }
 
-    public boolean isViewAttached() {
-        return view != null;
-    }
-
-    public V getViewOrThrow() throws ViewNotAttachedException {
+    public V getView() throws ViewNotAttachedException {
         if (view == null) throw new ViewNotAttachedException();
         return view;
     }

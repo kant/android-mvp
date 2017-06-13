@@ -1,4 +1,4 @@
-package com.moovel.demo.injection;
+package com.andretietz.demolib.injection;
 
 import com.andretietz.demolib.injection.scopes.ApplicationScope;
 import com.andretietz.demolib.model.ApplicationObject;

@@ -1,5 +1,5 @@
-//include ':demo'
-//include ':demolib'
+include ':demo'
+include ':demolib'
 include ':mvp'
 include ':mvp-dagger'
 include ':mvp-lint'

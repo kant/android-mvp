@@ -9,7 +9,7 @@ Android Support-Library v22.2.0
 
 Add the library to your dependencies:
 ```
-compile 'com.moovel.mvp:mvp:0.1.0'
+compile 'com.moovel.mvp:mvp:0.2.0'
 ```
 
 
@@ -38,11 +38,10 @@ the type of presenter which you want to use
 public class AwesomeActivity extends MVPActivity<AwesomeView, AwesomePresenter> 
     implements AwesomeView {
 
-    AwesomePresenter presenter;
+    AwesomePresenter presenter = new AwesomePresenter();
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        presenter = new AwesomePresenter();
         super.onCreate(savedInstanceState);
     }
     
@@ -57,8 +56,8 @@ Note: the Method "getPresenter" is used during the "onCreate" process, so make s
 
 # Lifecycle
 * The view gets attached to the presenter in the "onStart" method and gets unbind "onStop".
-* To access the view from the presenter call "getViewOrThrow". This method either returns the view or throws an ViewNotAttachedException
-* Calling "getViewOrThrow" in "onCreate" or "onDestroy" will cause Lint to fail.
+* To access the view from the presenter call "getView". This method either returns the view or throws an ViewNotAttachedException
+* Calling "getView" in "onCreate" or "onDestroy" will cause Lint to fail.
 # Lifecycle Observers
 
 LifecycleObservers are Interfaces that have callbacks on following Lifecycle-Events:

@@ -1,5 +1,6 @@
 package com.moovel.demo.injection;
 
+import com.andretietz.demolib.injection.ApplicationModule;
 import com.andretietz.demolib.injection.DemoLibraryInjections;
 import com.andretietz.demolib.injection.scopes.ApplicationScope;
 import com.moovel.demo.DemoApplication;

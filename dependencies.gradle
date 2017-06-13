@@ -13,7 +13,7 @@ ext {
                     ],
 
                     junit    : '4.12',
-                    lint     : '26.0.0-alpha2',
+                    lint     : '25.3.0',
                     mockito  : '2.8.9',
                     okhttp   : [
                             logginginterceptor: '3.8.0'
