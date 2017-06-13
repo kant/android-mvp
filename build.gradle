@@ -22,8 +22,6 @@ allprojects {
         maven { url 'https://maven.google.com' }
         mavenCentral()
         jcenter()
-
-        maven { url "https://maven.google.com" }
     }
 }
 apply from: 'dependencies.gradle'
