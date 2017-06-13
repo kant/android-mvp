@@ -24,7 +24,7 @@ public class DemoLibraryActivityPresenter extends MVPPresenter<DemoLibraryActivi
     public void onStart() {
         super.onStart();
         try {
-            getViewOrThrow().showInjectedObjects(apo, aco);
+            getView().showInjectedObjects(apo, aco);
         } catch (ViewNotAttachedException e) {
             // ignore
         }

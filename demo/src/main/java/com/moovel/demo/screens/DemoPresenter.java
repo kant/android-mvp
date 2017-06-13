@@ -32,7 +32,7 @@ public class DemoPresenter extends MVPPresenter<DemoView> {
     public void onStart() {
         super.onStart();
         try {
-            getViewOrThrow().showInjectedObjects(apo, aco);
+            getView().showInjectedObjects(apo, aco);
         } catch (ViewNotAttachedException e) {
             // view not available
         }
@@ -42,7 +42,7 @@ public class DemoPresenter extends MVPPresenter<DemoView> {
 
     public void onButtonClicked() {
         try {
-            getViewOrThrow().openLibraryActivity();
+            getView().openLibraryActivity();
         } catch (ViewNotAttachedException e) {
             // view not available
         }

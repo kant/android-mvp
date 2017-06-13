@@ -63,7 +63,7 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
 
     @Override
     public List<String> getApplicableMethodNames() {
-        return Arrays.asList("getViewOrThrow", "getView");
+        return Arrays.asList("getView");
     }
 
     @Override

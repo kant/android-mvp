@@ -28,7 +28,7 @@ public class DemoLibraryFragmentPresenter extends MVPPresenter<DemoLibraryFragme
     public void onStart() {
         super.onStart();
         try {
-            getViewOrThrow().showInjectedObjects(apo, aco, fro);
+            getView().showInjectedObjects(apo, aco, fro);
         } catch (ViewNotAttachedException e) {
             // view not attached, so don't do anything
         }
