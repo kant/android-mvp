@@ -19,12 +19,7 @@ public class DemoPresenter extends MVPPresenter<DemoView> {
     private final ApplicationObject apo;
     private final ActivityObject aco;
 
-    LifecycleEventScheduler<Disposable> scheduler = new LifecycleEventScheduler<>(new LifecycleEventScheduler.LifecycleEventListener<Disposable>() {
-        @Override
-        public void onEvent(@LifecycleEvent int event, Disposable item) {
-            item.dispose();
-        }
-    });
+    LifecycleEventScheduler<Disposable> scheduler = new LifecycleEventScheduler<>((event, item) -> item.dispose());
 
     @Inject
     public DemoPresenter(ApplicationObject apo, ActivityObject aco) {
