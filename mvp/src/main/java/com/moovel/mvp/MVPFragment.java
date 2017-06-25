@@ -16,6 +16,7 @@
 
 package com.moovel.mvp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,67 +27,62 @@ import com.moovel.mvp.lifecycle.LifecycleObserver;
  * Every Fragment should extend the MVPFragment, which provides some mvp base functionalities
  */
 public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
-        extends Fragment {
+        extends Fragment implements BaseMVP<VIEW, PRESENTER> {
 
-    private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
+    private final MVPAndroidDelegate<VIEW, PRESENTER> delegate;
 
     public MVPFragment() {
-        if (!(this instanceof MVPView)) {
-            throw new IllegalStateException(
-                    String.format("The Fragment \"%s\" must implement a View!", this.getClass().getSimpleName()));
-        }
+        delegate = new MVPAndroidDelegate<>(this);
     }
 
     public void addLifecycleObserver(LifecycleObserver interceptor) {
-        observer.addLifecycleObserver(interceptor);
+        delegate.addLifecycleObserver(interceptor);
     }
 
     public void removeLifecycleObserver(LifecycleObserver interceptor) {
-        observer.removeLifecycleObserver(interceptor);
+        delegate.removeLifecycleObserver(interceptor);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked
-        observer.addLifecycleObserver(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
-        observer.doOnCreate();
+        delegate.attachView((VIEW) this, getPresenter());
+        delegate.onCreate();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        observer.doOnStart();
+        delegate.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        observer.doOnResume();
+        delegate.onResume();
     }
 
     @Override
     public void onPause() {
-        observer.doOnPause();
+        delegate.onPause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        observer.doOnStop();
+        delegate.onStop();
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        observer.doOnDestroy();
+        delegate.onDestroy();
         super.onDestroy();
     }
-
-
-    /**
-     * @return the presenter
-     */
-    protected abstract PRESENTER getPresenter();
-
 }
