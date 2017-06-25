@@ -16,7 +16,6 @@
 
 package com.moovel.mvp;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -24,7 +23,6 @@ import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 
 public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
@@ -35,13 +33,13 @@ public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends 
     @Inject
     PRESENTER presenter;
 
+    public DaggerMVPFragment() {
+        delegate = new MVPAndroidDelegate<>(this);
+    }
+
     @Override
     public PRESENTER getPresenter() {
         return presenter;
-    }
-
-    public DaggerMVPFragment() {
-        delegate = new MVPAndroidDelegate<>(this);
     }
 
     public void addLifecycleObserver(LifecycleObserver interceptor) {
@@ -50,12 +48,6 @@ public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends 
 
     public void removeLifecycleObserver(LifecycleObserver interceptor) {
         delegate.removeLifecycleObserver(interceptor);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        AndroidSupportInjection.inject(this);
-        super.onAttach(context);
     }
 
     @Override

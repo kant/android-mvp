@@ -23,7 +23,6 @@ import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public abstract class DaggerMVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
@@ -53,7 +52,6 @@ public abstract class DaggerMVPActivity<VIEW extends MVPView, PRESENTER extends 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         //noinspection unchecked}
         delegate.attachView((VIEW) this, getPresenter());
