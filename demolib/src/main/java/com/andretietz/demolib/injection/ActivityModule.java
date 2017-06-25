@@ -11,19 +11,6 @@ import timber.log.Timber;
 
 @Module(includes = LibraryFragmentInjector.class)
 public class ActivityModule {
-
-    private final Activity activity;
-
-    public ActivityModule(Activity activity) {
-        this.activity = activity;
-    }
-
-    @Provides
-    @ActivityScope
-    Activity provideActivity() {
-        return activity;
-    }
-
     @Provides
     @ActivityScope
     ActivityObject provideActivityObject(Activity activity) {

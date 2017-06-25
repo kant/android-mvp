@@ -4,9 +4,10 @@ package com.moovel.demo.injection;
 import android.app.Activity;
 
 import com.andretietz.demolib.injection.ActivityModule;
-import com.andretietz.demolib.injection.ActivityModuleSubcomponentBuilder;
+import com.andretietz.demolib.injection.ActivityProvidingSubcomponentBuilder;
 import com.andretietz.demolib.injection.scopes.ActivityScope;
 import com.moovel.demo.screens.DemoActivity;
+import com.moovel.mvp.ActivityProvidingModule;
 
 import dagger.Binds;
 import dagger.Module;
@@ -25,10 +26,10 @@ public abstract class DemoAppInjections {
             DemoActivitySubcomponent.Builder builder);
 
     @ActivityScope
-    @Subcomponent(modules = ActivityModule.class)
+    @Subcomponent(modules = {ActivityModule.class, ActivityProvidingModule.class})
     interface DemoActivitySubcomponent extends AndroidInjector<DemoActivity> {
         @Subcomponent.Builder
-        abstract class Builder extends ActivityModuleSubcomponentBuilder<DemoActivity> {
+        abstract class Builder extends ActivityProvidingSubcomponentBuilder<DemoActivity> {
         }
     }
 }
