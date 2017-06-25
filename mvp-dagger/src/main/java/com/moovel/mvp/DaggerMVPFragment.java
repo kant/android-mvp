@@ -35,6 +35,11 @@ public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends 
     @Inject
     PRESENTER presenter;
 
+    @Override
+    public PRESENTER getPresenter() {
+        return presenter;
+    }
+
     public DaggerMVPFragment() {
         delegate = new MVPAndroidDelegate<>(this);
     }

@@ -24,10 +24,10 @@ import com.moovel.mvp.lifecycle.LifecycleObserver;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import dagger.android.DaggerActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
 public abstract class DaggerMVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
-        extends DaggerActivity implements BaseMVP<VIEW, PRESENTER> {
+        extends DaggerAppCompatActivity implements BaseMVP<VIEW, PRESENTER> {
 
     private final MVPAndroidDelegate<VIEW, PRESENTER> delegate;
 

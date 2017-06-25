@@ -25,7 +25,7 @@ class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresenter<VI
     }
 
     protected void onCreate() {
-        observer.doOnStart();
+        observer.doOnCreate();
     }
 
     protected void onStart() {

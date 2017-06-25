@@ -28,10 +28,10 @@ android {
 
 dependencies {
 
-    // Dagger
+    compile libraries.timber
+    /** dagger2 **/
     compile libraries.dagger.core
     compile libraries.dagger.android.support
-
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
 
