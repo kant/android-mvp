@@ -2,7 +2,7 @@ package com.moovel.mvp;
 
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
-class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>> {
+final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>> {
     private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
 
     public MVPAndroidDelegate(Object view) {
