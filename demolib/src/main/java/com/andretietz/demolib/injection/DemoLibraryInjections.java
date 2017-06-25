@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.andretietz.demolib.injection.scopes.ActivityScope;
 import com.andretietz.demolib.screens.DemoLibraryActivity;
 import com.moovel.mvp.ActivityProvidingModule;
+import com.moovel.mvp.ActivityProvidingSubcomponentBuilder;
 
 import dagger.Binds;
 import dagger.Module;

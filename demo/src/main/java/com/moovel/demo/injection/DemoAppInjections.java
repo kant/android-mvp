@@ -4,10 +4,10 @@ package com.moovel.demo.injection;
 import android.app.Activity;
 
 import com.andretietz.demolib.injection.ActivityModule;
-import com.andretietz.demolib.injection.ActivityProvidingSubcomponentBuilder;
 import com.andretietz.demolib.injection.scopes.ActivityScope;
 import com.moovel.demo.screens.DemoActivity;
 import com.moovel.mvp.ActivityProvidingModule;
+import com.moovel.mvp.ActivityProvidingSubcomponentBuilder;
 
 import dagger.Binds;
 import dagger.Module;
