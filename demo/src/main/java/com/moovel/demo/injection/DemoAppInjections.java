@@ -5,6 +5,7 @@ import android.app.Activity;
 
 import com.andretietz.demolib.injection.ActivityModule;
 import com.andretietz.demolib.injection.scopes.ActivityScope;
+import com.andretietz.demolib.injection.scopes.ApplicationScope;
 import com.moovel.demo.screens.DemoActivity;
 import com.moovel.mvp.ActivityProvidingModule;
 import com.moovel.mvp.ActivityProvidingSubcomponentBuilder;
@@ -32,4 +33,6 @@ public abstract class DemoAppInjections {
         abstract class Builder extends ActivityProvidingSubcomponentBuilder<DemoActivity> {
         }
     }
+
+
 }

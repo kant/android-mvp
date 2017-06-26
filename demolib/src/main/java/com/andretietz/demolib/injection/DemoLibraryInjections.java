@@ -8,6 +8,7 @@ import com.moovel.mvp.ActivityProvidingModule;
 import com.moovel.mvp.ActivityProvidingSubcomponentBuilder;
 
 import dagger.Binds;
+import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Subcomponent;
 import dagger.android.ActivityKey;

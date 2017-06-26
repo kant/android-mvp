@@ -9,14 +9,14 @@ import com.moovel.demo.DemoApplication;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
+import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
  * root component
  **/
 @ApplicationScope
 @Component(modules = {
-        AndroidInjectionModule.class, // dagger module for android support
+        AndroidSupportInjectionModule.class, // dagger module for android support
         ApplicationModule.class, // providing the ApplicationObject
         DemoAppInjections.class, // module to inject app lvl activities
         DemoLibraryInjections.class // module to inject lib lvl activities
