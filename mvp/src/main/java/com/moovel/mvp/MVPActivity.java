@@ -23,68 +23,57 @@ import android.support.v7.app.AppCompatActivity;
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
-        extends AppCompatActivity {
+        extends AppCompatActivity implements BaseMVP<VIEW, PRESENTER> {
 
-    private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
+    private final MVPAndroidDelegate<VIEW, PRESENTER> delegate;
 
     public MVPActivity() {
-        if (!(this instanceof MVPView)) {
-            throw new IllegalStateException(
-                    String.format("The Activity \"%s\" must implement a View!", this.getClass().getSimpleName()));
-        }
+        delegate = new MVPAndroidDelegate<>(this);
     }
 
     public void addLifecycleObserver(LifecycleObserver interceptor) {
-        observer.addLifecycleObserver(interceptor);
+        delegate.addLifecycleObserver(interceptor);
     }
 
     public void removeLifecycleObserver(LifecycleObserver interceptor) {
-        observer.removeLifecycleObserver(interceptor);
+        delegate.removeLifecycleObserver(interceptor);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked}
-        observer.addLifecycleObserver(new PresenterLifecycleObserver<>((VIEW) this, getPresenter()));
-        observer.doOnCreate();
+        delegate.attachView((VIEW) this, getPresenter());
+        delegate.onCreate();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        observer.doOnStart();
+        delegate.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        observer.doOnResume();
+        delegate.onResume();
     }
 
     @Override
     protected void onPause() {
-        observer.doOnPause();
+        delegate.onPause();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        observer.doOnStop();
+        delegate.onStop();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        observer.doOnDestroy();
+        delegate.onDestroy();
         super.onDestroy();
     }
-
-    /**
-     * use the component to inject your keeper and return it
-     *
-     * @return the keeper
-     */
-    protected abstract PRESENTER getPresenter();
-
 }

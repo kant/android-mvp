@@ -16,26 +16,75 @@
 
 package com.moovel.mvp;
 
-import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.DaggerFragment;
 
 public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
-        extends MVPFragment<VIEW, PRESENTER> {
+        extends DaggerFragment implements BaseMVP<VIEW, PRESENTER> {
+
+    private final MVPAndroidDelegate<VIEW, PRESENTER> delegate;
 
     @Inject
     PRESENTER presenter;
 
-    @Override
-    protected PRESENTER getPresenter() {
-        return presenter;
+    public DaggerMVPFragment() {
+        delegate = new MVPAndroidDelegate<>(this);
     }
 
     @Override
-    public void onAttach(Context context) {
-        AndroidSupportInjection.inject(this);
-        super.onAttach(context);
+    public PRESENTER getPresenter() {
+        return presenter;
+    }
+
+    public void addLifecycleObserver(LifecycleObserver interceptor) {
+        delegate.addLifecycleObserver(interceptor);
+    }
+
+    public void removeLifecycleObserver(LifecycleObserver interceptor) {
+        delegate.removeLifecycleObserver(interceptor);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //noinspection unchecked
+        delegate.attachView((VIEW) this, getPresenter());
+        delegate.onCreate();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        delegate.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        delegate.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        delegate.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        delegate.onStop();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        delegate.onDestroy();
+        super.onDestroy();
     }
 }

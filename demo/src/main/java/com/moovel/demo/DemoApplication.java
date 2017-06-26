@@ -21,7 +21,7 @@ public class DemoApplication extends Application implements HasActivityInjector 
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
-        DaggerDemoApplicationComponent.create().inject(this);
+        DaggerDemoApplicationComponent.builder().application(this).build().inject(this);
     }
 
     @Override

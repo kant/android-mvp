@@ -29,7 +29,6 @@ dependencies {
     // Dagger
     compile libraries.dagger.core
     compile libraries.dagger.android.support
-
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
 }
