@@ -9,6 +9,7 @@ import com.moovel.demo.DemoApplication;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 /**
@@ -21,8 +22,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         DemoAppInjections.class, // module to inject app lvl activities
         DemoLibraryInjections.class // module to inject lib lvl activities
 })
-public interface DemoApplicationComponent {
-    void inject(DemoApplication application);
+public interface DemoApplicationComponent extends AndroidInjector<DemoApplication> {
 
     @Component.Builder
     interface Builder {
