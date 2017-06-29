@@ -75,9 +75,9 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
         PsiClass containingClass = method.getContainingClass();
         if (containingClass != null && "com.moovel.mvp.MVPPresenter".equals(containingClass.getQualifiedName())) {
             // check if any parent method is onCreate
-            if (wasCalledInUnboundAreas(call) && "getViewOrThrow".equals(methodName)) {
+            if (wasCalledInUnboundAreas(call) && "com.moovel.mvp.MVPPresenter.getView".equals(methodName)) {
                 context.report(ISSUE_VIEW_USAGE_IN_CREATE, call, context.getLocation(call),
-                        "Pointless call to getViewOrThrow");
+                        "Pointless call to getView");
             }
         }
     }

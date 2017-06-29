@@ -27,7 +27,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
             "    protected void onPause() {}\n" +
             "    protected void onResume() {}\n" +
             "    protected void onDestroy() {}\n" +
-            "    protected Object getViewOrThrow() {return null;}\n"
+            "    protected Object getView() {return null;}\n"
             + "}";
 
     private final TestFile presenterStub = java(presenterStubString);
@@ -69,12 +69,12 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onCreate() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
-        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getViewOrThrow [UnboundViewUsage]\n" +
-                "        getViewOrThrow();\n" +
-                "        ~~~~~~~~~~~~~~~~\n" +
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
                 "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
     }
 
@@ -84,12 +84,12 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onDestroy() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
-        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getViewOrThrow [UnboundViewUsage]\n" +
-                "        getViewOrThrow();\n" +
-                "        ~~~~~~~~~~~~~~~~\n" +
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
                 "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
     }
 
@@ -99,7 +99,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onStart() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
         assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
@@ -111,7 +111,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onStop() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
         assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
@@ -123,7 +123,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onPause() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
         assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
@@ -135,7 +135,7 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 + "package com.moovel.mvp;\n" +
                 "public class Presenter extends MVPPresenter {\n" +
                 "    protected void onResume() {\n" +
-                "        getViewOrThrow();\n" +
+                "        getView();\n" +
                 "    }\n" +
                 "}";
         assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
