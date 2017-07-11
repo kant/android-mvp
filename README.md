@@ -9,7 +9,7 @@ Android Support-Library v22.2.0
 
 Add the library to your dependencies:
 ```
-compile 'com.moovel.mvp:mvp:0.2.0'
+compile 'com.moovel.mvp:mvp:0.4.0'
 ```
 
 
@@ -68,6 +68,8 @@ LifecycleObservers are Interfaces that have callbacks on following Lifecycle-Eve
 * onPause
 * onStop
 * onDestroy
+* onLowMemory
+* onSaveInstanceState
 
 Within the library you have the chance to add LifecycleObserver to:
  * MVPPresenter (add/removeLifecycleObserver)
@@ -86,7 +88,7 @@ LifecycleObservers - Section.
 Here's an example of executing a runnable on stop
 ```
 private final LifecycleEventScheduler<Runnable> lifecycleScheduler
-        = new LifecycleEventScheduler<>((event, item) -> item.run());
+        = new LifecycleEventScheduler<>((event, item, state) -> item.run());
 
 @Override
 public void onCreate() {
