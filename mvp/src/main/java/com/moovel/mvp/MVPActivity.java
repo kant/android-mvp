@@ -44,7 +44,7 @@ public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPre
         super.onCreate(savedInstanceState);
         //noinspection unchecked}
         delegate.attachView((VIEW) this, getPresenter());
-        delegate.onCreate();
+        delegate.onCreate(savedInstanceState);
     }
 
     @Override
@@ -66,6 +66,12 @@ public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPre
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        delegate.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onStop() {
         delegate.onStop();
         super.onStop();
@@ -75,5 +81,11 @@ public abstract class MVPActivity<VIEW extends MVPView, PRESENTER extends MVPPre
     protected void onDestroy() {
         delegate.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        delegate.onLowMemory();
     }
 }

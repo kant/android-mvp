@@ -16,6 +16,8 @@
 
 package com.moovel.mvp;
 
+import android.os.Bundle;
+
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 class PresenterLifecycleObserver<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>>
@@ -30,34 +32,44 @@ class PresenterLifecycleObserver<VIEW extends MVPView, PRESENTER extends MVPPres
     }
 
     @Override
-    public void doOnCreate() {
-        presenter.onCreate();
+    public void onCreate(Bundle inState) {
+        presenter.onCreate(inState);
     }
 
     @Override
-    public void doOnStart() {
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        presenter.onLowMemory();
+    }
+
+    @Override
+    public void onStart() {
         presenter.attachView(view);
         presenter.onStart();
     }
 
     @Override
-    public void doOnResume() {
+    public void onResume() {
         presenter.onResume();
     }
 
     @Override
-    public void doOnPause() {
+    public void onPause() {
         presenter.onPause();
     }
 
     @Override
-    public void doOnStop() {
+    public void onStop() {
         presenter.onStop();
         presenter.detachView();
     }
 
     @Override
-    public void doOnDestroy() {
+    public void onDestroy() {
         presenter.onDestroy();
     }
 }

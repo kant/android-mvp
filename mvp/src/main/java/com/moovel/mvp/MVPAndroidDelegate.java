@@ -1,5 +1,7 @@
 package com.moovel.mvp;
 
+import android.os.Bundle;
+
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>> {
@@ -24,27 +26,35 @@ final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresen
         observer.removeLifecycleObserver(interceptor);
     }
 
-    protected void onCreate() {
-        observer.doOnCreate();
+    protected void onCreate(Bundle inState) {
+        observer.onCreate(inState);
     }
 
     protected void onStart() {
-        observer.doOnStart();
+        observer.onStart();
     }
 
     protected void onResume() {
-        observer.doOnResume();
+        observer.onResume();
     }
 
     protected void onPause() {
-        observer.doOnPause();
+        observer.onPause();
     }
 
     protected void onStop() {
-        observer.doOnStop();
+        observer.onStop();
     }
 
     protected void onDestroy() {
-        observer.doOnDestroy();
+        observer.onDestroy();
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        observer.onSaveInstanceState(outState);
+    }
+
+    protected void onLowMemory() {
+        observer.onLowMemory();
     }
 }

@@ -16,6 +16,8 @@
 
 package com.moovel.mvp;
 
+import android.os.Bundle;
+
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import java.util.LinkedList;
@@ -35,44 +37,58 @@ final class CompositeLifecycleObserver implements LifecycleObserver {
 
 
     @Override
-    public void doOnCreate() {
+    public void onCreate(Bundle inState) {
         for (int i = 0; i < observers.size(); i++) {
-            observers.get(i).doOnCreate();
+            observers.get(i).onCreate(inState);
         }
     }
 
     @Override
-    public void doOnStart() {
+    public void onStart() {
         for (int i = 0; i < observers.size(); i++) {
-            observers.get(i).doOnStart();
+            observers.get(i).onStart();
         }
     }
 
     @Override
-    public void doOnResume() {
+    public void onResume() {
         for (int i = 0; i < observers.size(); i++) {
-            observers.get(i).doOnResume();
+            observers.get(i).onResume();
         }
     }
 
     @Override
-    public void doOnPause() {
+    public void onPause() {
         for (int i = observers.size() - 1; i >= 0; i--) {
-            observers.get(i).doOnPause();
+            observers.get(i).onPause();
         }
     }
 
     @Override
-    public void doOnStop() {
+    public void onStop() {
         for (int i = observers.size() - 1; i >= 0; i--) {
-            observers.get(i).doOnStop();
+            observers.get(i).onStop();
         }
     }
 
     @Override
-    public void doOnDestroy() {
+    public void onDestroy() {
         for (int i = observers.size() - 1; i >= 0; i--) {
-            observers.get(i).doOnDestroy();
+            observers.get(i).onDestroy();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        for (int i = observers.size() - 1; i >= 0; i--) {
+            observers.get(i).onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).onLowMemory();
         }
     }
 }

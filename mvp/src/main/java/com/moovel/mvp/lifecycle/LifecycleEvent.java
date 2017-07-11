@@ -22,14 +22,16 @@ import java.lang.annotation.Retention;
 
 import static com.moovel.mvp.lifecycle.LifecycleEvent.CREATE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.DESTROY;
+import static com.moovel.mvp.lifecycle.LifecycleEvent.LOWMEMORY;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.PAUSE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.RESUME;
+import static com.moovel.mvp.lifecycle.LifecycleEvent.SAVEINSTANCESTATE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.START;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.STOP;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @Retention(SOURCE)
-@IntDef({CREATE, START, RESUME, PAUSE, STOP, DESTROY})
+@IntDef({CREATE, START, RESUME, PAUSE, STOP, DESTROY, SAVEINSTANCESTATE, LOWMEMORY})
 public @interface LifecycleEvent {
     int CREATE = 0;
     int START = 1;
@@ -37,4 +39,6 @@ public @interface LifecycleEvent {
     int PAUSE = 3;
     int STOP = 4;
     int DESTROY = 5;
+    int SAVEINSTANCESTATE = 6;
+    int LOWMEMORY = 7;
 }

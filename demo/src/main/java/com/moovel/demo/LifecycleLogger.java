@@ -16,6 +16,8 @@
 
 package com.moovel.demo;
 
+import android.os.Bundle;
+
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import timber.log.Timber;
@@ -29,32 +31,42 @@ public final class LifecycleLogger implements LifecycleObserver {
     }
 
     @Override
-    public void doOnCreate() {
-        Timber.v("%s.onCreate", className);
+    public void onCreate(Bundle inState) {
+        Timber.v("%s.onCreate(%s)", className, inState);
     }
 
     @Override
-    public void doOnStart() {
+    public void onStart() {
         Timber.v("%s.onStart", className);
     }
 
     @Override
-    public void doOnResume() {
+    public void onResume() {
         Timber.v("%s.onResume", className);
     }
 
     @Override
-    public void doOnPause() {
+    public void onPause() {
         Timber.v("%s.onPause", className);
     }
 
     @Override
-    public void doOnStop() {
+    public void onStop() {
         Timber.v("%s.onStop", className);
     }
 
     @Override
-    public void doOnDestroy() {
+    public void onDestroy() {
         Timber.v("%s.onDestroy", className);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Timber.v("%s.onSaveInstanceState(%s)", className, outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        Timber.v("%s.onLowMemory()", className);
     }
 }

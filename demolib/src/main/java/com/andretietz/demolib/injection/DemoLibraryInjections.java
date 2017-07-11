@@ -5,10 +5,8 @@ import android.app.Activity;
 import com.andretietz.demolib.injection.scopes.ActivityScope;
 import com.andretietz.demolib.screens.DemoLibraryActivity;
 import com.moovel.mvp.ActivityProvidingModule;
-import com.moovel.mvp.ActivityProvidingSubcomponentBuilder;
 
 import dagger.Binds;
-import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Subcomponent;
 import dagger.android.ActivityKey;
@@ -27,7 +25,12 @@ public abstract class DemoLibraryInjections {
     @Subcomponent(modules = {ActivityModule.class, ActivityProvidingModule.class})
     public interface DemoLibraryActivitySubcomponent extends AndroidInjector<DemoLibraryActivity> {
         @Subcomponent.Builder
-        abstract class Builder extends ActivityProvidingSubcomponentBuilder<DemoLibraryActivity> {
+        abstract class Builder extends AndroidInjector.Builder<DemoLibraryActivity> {
+            protected abstract Builder provideActivityModule(ActivityProvidingModule module);
+            @Override
+            public void seedInstance(DemoLibraryActivity instance) {
+                provideActivityModule(new ActivityProvidingModule(instance));
+            }
         }
     }
 }

@@ -16,7 +16,6 @@
 
 package com.moovel.mvp;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,16 +43,11 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //noinspection unchecked
         delegate.attachView((VIEW) this, getPresenter());
-        delegate.onCreate();
+        delegate.onCreate(savedInstanceState);
     }
 
     @Override
@@ -75,6 +69,12 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        delegate.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onStop() {
         delegate.onStop();
         super.onStop();
@@ -84,5 +84,11 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
     public void onDestroy() {
         delegate.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        delegate.onLowMemory();
     }
 }

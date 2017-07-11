@@ -16,11 +16,15 @@
 
 package com.moovel.mvp.lifecycle;
 
+import android.os.Bundle;
+
 public interface LifecycleObserver {
-    void doOnCreate();
-    void doOnStart();
-    void doOnResume();
-    void doOnPause();
-    void doOnStop();
-    void doOnDestroy();
+    void onCreate(Bundle inState);
+    void onStart();
+    void onResume();
+    void onPause();
+    void onStop();
+    void onDestroy();
+    void onSaveInstanceState(Bundle outState);
+    void onLowMemory();
 }
