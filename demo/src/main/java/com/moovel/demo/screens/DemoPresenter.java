@@ -12,14 +12,13 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.operators.observable.ObservableAmb;
 
 @ActivityScope
 public class DemoPresenter extends MVPPresenter<DemoView> {
     private final ApplicationObject apo;
     private final ActivityObject aco;
 
-    LifecycleEventScheduler<Disposable> scheduler = new LifecycleEventScheduler<>((event, item) -> item.dispose());
+    LifecycleEventScheduler<Disposable> scheduler = new LifecycleEventScheduler<>((event, item, state) -> item.dispose());
 
     @Inject
     public DemoPresenter(ApplicationObject apo, ActivityObject aco) {

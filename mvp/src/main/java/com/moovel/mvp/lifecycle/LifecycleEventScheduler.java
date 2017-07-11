@@ -17,7 +17,9 @@
 package com.moovel.mvp.lifecycle;
 
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import java.util.HashSet;
@@ -25,8 +27,10 @@ import java.util.Set;
 
 import static com.moovel.mvp.lifecycle.LifecycleEvent.CREATE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.DESTROY;
+import static com.moovel.mvp.lifecycle.LifecycleEvent.LOWMEMORY;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.PAUSE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.RESUME;
+import static com.moovel.mvp.lifecycle.LifecycleEvent.SAVEINSTANCESTATE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.START;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.STOP;
 
@@ -58,45 +62,62 @@ public final class LifecycleEventScheduler<T> implements LifecycleObserver {
     }
 
     @Override
-    public void doOnCreate() {
-        execute(CREATE);
+    public void onCreate(Bundle inState) {
+        execute(CREATE, inState);
     }
 
     @Override
-    public void doOnStart() {
-        execute(START);
+    public void onStart() {
+        execute(START, null);
     }
 
     @Override
-    public void doOnResume() {
-        execute(RESUME);
+    public void onResume() {
+        execute(RESUME, null);
     }
 
     @Override
-    public void doOnPause() {
-        execute(PAUSE);
+    public void onPause() {
+        execute(PAUSE, null);
     }
 
     @Override
-    public void doOnStop() {
-        execute(STOP);
+    public void onStop() {
+        execute(STOP, null);
     }
 
     @Override
-    public void doOnDestroy() {
-        execute(DESTROY);
+    public void onDestroy() {
+        execute(DESTROY, null);
     }
 
-    private void execute(@LifecycleEvent int event) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        execute(SAVEINSTANCESTATE, outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        execute(LOWMEMORY, null);
+    }
+
+    private void execute(@LifecycleEvent int event, @Nullable Bundle state) {
         Set<T> itemset = container.get(event);
         if (itemset == null) return;
         for (T item : itemset) {
-            eventListener.onEvent(event, item);
+            eventListener.onEvent(event, item, state);
         }
         itemset.clear();
     }
 
     public interface LifecycleEventListener<T> {
-        void onEvent(@LifecycleEvent int event, T item);
+        /**
+         * Called on every lifecycle event
+         *
+         * @param event {@link LifecycleEvent} which was triggered
+         * @param item  you want to do smth with
+         * @param state only emitted in {@link #onCreate(Bundle)} and {@link #onSaveInstanceState(Bundle)}
+         */
+        void onEvent(@LifecycleEvent int event, T item, @Nullable Bundle state);
     }
 }

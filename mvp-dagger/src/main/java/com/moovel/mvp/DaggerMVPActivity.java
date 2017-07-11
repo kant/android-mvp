@@ -55,7 +55,13 @@ public abstract class DaggerMVPActivity<VIEW extends MVPView, PRESENTER extends 
         super.onCreate(savedInstanceState);
         //noinspection unchecked}
         delegate.attachView((VIEW) this, getPresenter());
-        delegate.onCreate();
+        delegate.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        delegate.onSaveInstanceState(outState);
     }
 
     @Override
@@ -86,5 +92,11 @@ public abstract class DaggerMVPActivity<VIEW extends MVPView, PRESENTER extends 
     protected void onDestroy() {
         delegate.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        delegate.onLowMemory();
     }
 }

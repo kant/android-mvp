@@ -1,5 +1,7 @@
 package com.moovel.mvp;
 
+import android.os.Bundle;
+
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import org.junit.Test;
@@ -13,8 +15,11 @@ import static org.mockito.Mockito.verify;
 
 public class CompositeLifecycleObserverTest {
 
+    private final Bundle emptyBundle = new Bundle();
+
     @Test
     public void testIfAddingAndRemovingWorksCorrect() {
+
         CompositeLifecycleObserver observers = new CompositeLifecycleObserver();
 
         LifecycleObserver observer1 = Mockito.mock(LifecycleObserver.class);
@@ -48,25 +53,31 @@ public class CompositeLifecycleObserverTest {
         observers.addLifecycleObserver(observer1);
         observers.addLifecycleObserver(observer2);
 
-        observers.doOnCreate();
-        observers.doOnStart();
-        observers.doOnPause();
-        observers.doOnResume();
-        observers.doOnStop();
-        observers.doOnDestroy();
+        observers.onCreate(emptyBundle);
+        observers.onStart();
+        observers.onResume();
+        observers.onPause();
+        observers.onSaveInstanceState(emptyBundle);
+        observers.onStop();
+        observers.onDestroy();
+        observers.onLowMemory();
 
-        verify(observer1, times(1)).doOnCreate();
-        verify(observer1, times(1)).doOnStart();
-        verify(observer1, times(1)).doOnResume();
-        verify(observer1, times(1)).doOnPause();
-        verify(observer1, times(1)).doOnStop();
-        verify(observer1, times(1)).doOnDestroy();
-        verify(observer2, times(1)).doOnCreate();
-        verify(observer2, times(1)).doOnStart();
-        verify(observer2, times(1)).doOnResume();
-        verify(observer2, times(1)).doOnPause();
-        verify(observer2, times(1)).doOnStop();
-        verify(observer2, times(1)).doOnDestroy();
+        verify(observer1, times(1)).onCreate(emptyBundle);
+        verify(observer1, times(1)).onStart();
+        verify(observer1, times(1)).onResume();
+        verify(observer1, times(1)).onPause();
+        verify(observer1, times(1)).onSaveInstanceState(emptyBundle);
+        verify(observer1, times(1)).onStop();
+        verify(observer1, times(1)).onDestroy();
+        verify(observer1, times(1)).onLowMemory();
+        verify(observer2, times(1)).onCreate(emptyBundle);
+        verify(observer2, times(1)).onStart();
+        verify(observer2, times(1)).onResume();
+        verify(observer2, times(1)).onPause();
+        verify(observer2, times(1)).onSaveInstanceState(emptyBundle);
+        verify(observer2, times(1)).onStop();
+        verify(observer2, times(1)).onDestroy();
+        verify(observer2, times(1)).onLowMemory();
     }
 
     @Test
@@ -77,28 +88,34 @@ public class CompositeLifecycleObserverTest {
         observers.addLifecycleObserver(observer1);
         observers.addLifecycleObserver(observer2);
 
-        observers.doOnCreate();
-        observers.doOnStart();
-        observers.doOnResume();
-        observers.doOnPause();
-        observers.doOnStop();
-        observers.doOnDestroy();
+        observers.onCreate(emptyBundle);
+        observers.onStart();
+        observers.onResume();
+        observers.onPause();
+        observers.onSaveInstanceState(emptyBundle);
+        observers.onStop();
+        observers.onDestroy();
+        observers.onLowMemory();
 
         InOrder inOrder = inOrder(observer1, observer2);
 
-        inOrder.verify(observer1).doOnCreate();
-        inOrder.verify(observer2).doOnCreate();
-        inOrder.verify(observer1).doOnStart();
-        inOrder.verify(observer2).doOnStart();
-        inOrder.verify(observer1).doOnResume();
-        inOrder.verify(observer2).doOnResume();
+        inOrder.verify(observer1).onCreate(emptyBundle);
+        inOrder.verify(observer2).onCreate(emptyBundle);
+        inOrder.verify(observer1).onStart();
+        inOrder.verify(observer2).onStart();
+        inOrder.verify(observer1).onResume();
+        inOrder.verify(observer2).onResume();
 
-        inOrder.verify(observer2).doOnPause();
-        inOrder.verify(observer1).doOnPause();
-        inOrder.verify(observer2).doOnStop();
-        inOrder.verify(observer1).doOnStop();
-        inOrder.verify(observer2).doOnDestroy();
-        inOrder.verify(observer1).doOnDestroy();
+        inOrder.verify(observer2).onPause();
+        inOrder.verify(observer1).onPause();
+        inOrder.verify(observer2).onSaveInstanceState(emptyBundle);
+        inOrder.verify(observer1).onSaveInstanceState(emptyBundle);
+        inOrder.verify(observer2).onStop();
+        inOrder.verify(observer1).onStop();
+        inOrder.verify(observer2).onDestroy();
+        inOrder.verify(observer1).onDestroy();
+        inOrder.verify(observer1).onLowMemory();
+        inOrder.verify(observer2).onLowMemory();
     }
 
 }

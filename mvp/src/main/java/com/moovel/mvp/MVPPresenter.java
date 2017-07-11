@@ -16,6 +16,7 @@
 
 package com.moovel.mvp;
 
+import android.os.Bundle;
 import android.support.annotation.CallSuper;
 
 import com.moovel.mvp.lifecycle.LifecycleObserver;
@@ -54,8 +55,13 @@ public abstract class MVPPresenter<V extends MVPView> {
      * Called after the view was attached to this presenter
      */
     @CallSuper
-    public void onCreate() {
-        observer.doOnCreate();
+    public void onCreate(Bundle inState) {
+        observer.onCreate(inState);
+    }
+
+    @CallSuper
+    public void onSaveInstanceState(Bundle outState) {
+        observer.onSaveInstanceState(outState);
     }
 
     /**
@@ -63,7 +69,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onStart() {
-        observer.doOnStart();
+        observer.onStart();
     }
 
     /**
@@ -71,7 +77,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onResume() {
-        observer.doOnResume();
+        observer.onResume();
     }
 
     /**
@@ -79,7 +85,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onPause() {
-        observer.doOnPause();
+        observer.onPause();
     }
 
     /**
@@ -87,7 +93,7 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onStop() {
-        observer.doOnStop();
+        observer.onStop();
     }
 
     /**
@@ -96,7 +102,12 @@ public abstract class MVPPresenter<V extends MVPView> {
      */
     @CallSuper
     public void onDestroy() {
-        observer.doOnDestroy();
+        observer.onDestroy();
+    }
+
+    @CallSuper
+    public void onLowMemory() {
+        observer.onLowMemory();
     }
 
 }
