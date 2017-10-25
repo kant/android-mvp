@@ -40,5 +40,7 @@ dependencies {
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
 
+    compile "com.android.support:animated-vector-drawable:$supportLibraryVersion"
+
     compile project(':demolib')
 }
