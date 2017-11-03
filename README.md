@@ -9,7 +9,7 @@ Android Support-Library v22.2.0
 
 Add the library to your dependencies:
 ```
-compile 'com.moovel.mvp:mvp:0.4.0'
+compile 'com.moovel.mvp:mvp:0.6.0'
 ```
 
 
