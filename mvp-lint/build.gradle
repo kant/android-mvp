@@ -10,13 +10,13 @@ configurations {
 
 
 dependencies {
-    compile libraries.lint.api
-    compile libraries.lint.checks
+    implementation "com.android.tools.lint:lint-api:25.3.0"
+    implementation "com.android.tools.lint:lint-checks:25.3.0"
 
-    testCompile libraries.junit
-    testCompile libraries.lint.lint
-    testCompile libraries.lint.tests
-    testCompile libraries.lint.testutils
+    testImplementation "junit:junit:4.12"
+    testImplementation "com.android.tools.lint:lint:25.3.0"
+    testImplementation "com.android.tools.lint:lint-tests:25.3.0"
+    testImplementation "com.android.tools:testutils:25.3.0"
 
     lintChecks files(jar)
 }
