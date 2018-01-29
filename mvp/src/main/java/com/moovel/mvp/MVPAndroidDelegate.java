@@ -57,4 +57,8 @@ final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresen
     protected void onLowMemory() {
         observer.onLowMemory();
     }
+
+    protected void onDestroyView() {
+        observer.onDestroyView();
+    }
 }

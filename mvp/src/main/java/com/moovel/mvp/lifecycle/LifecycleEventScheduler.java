@@ -27,6 +27,7 @@ import java.util.Set;
 
 import static com.moovel.mvp.lifecycle.LifecycleEvent.CREATE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.DESTROY;
+import static com.moovel.mvp.lifecycle.LifecycleEvent.DESTROYVIEW;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.LOWMEMORY;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.PAUSE;
 import static com.moovel.mvp.lifecycle.LifecycleEvent.RESUME;
@@ -99,6 +100,11 @@ public final class LifecycleEventScheduler<T> implements LifecycleObserver {
     @Override
     public void onLowMemory() {
         execute(LOWMEMORY, null);
+    }
+
+    @Override
+    public void onDestroyView() {
+        execute(DESTROYVIEW, null);
     }
 
     private void execute(@LifecycleEvent int event, @Nullable Bundle state) {

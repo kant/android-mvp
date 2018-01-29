@@ -95,6 +95,13 @@ public abstract class DaggerMVPDialogFragment<VIEW extends MVPView, PRESENTER ex
         super.onLowMemory();
         delegate.onLowMemory();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        delegate.onDestroyView();
+    }
+
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return childFragmentInjector;

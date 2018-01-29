@@ -91,4 +91,10 @@ final class CompositeLifecycleObserver implements LifecycleObserver {
             observers.get(i).onLowMemory();
         }
     }
+
+    public void onDestroyView() {
+        for (int i = 0; i < observers.size(); i++) {
+            observers.get(i).onDestroyView();
+        }
+    }
 }

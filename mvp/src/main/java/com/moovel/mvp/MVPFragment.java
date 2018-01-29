@@ -91,4 +91,10 @@ public abstract class MVPFragment<VIEW extends MVPView, PRESENTER extends MVPPre
         super.onLowMemory();
         delegate.onLowMemory();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        delegate.onDestroyView();
+    }
 }

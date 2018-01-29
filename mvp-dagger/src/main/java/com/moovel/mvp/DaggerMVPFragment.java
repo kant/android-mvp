@@ -99,4 +99,10 @@ public abstract class DaggerMVPFragment<VIEW extends MVPView, PRESENTER extends 
         super.onLowMemory();
         delegate.onLowMemory();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        delegate.onDestroyView();
+    }
 }

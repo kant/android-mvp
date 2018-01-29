@@ -27,4 +27,5 @@ public interface LifecycleObserver {
     void onDestroy();
     void onSaveInstanceState(Bundle outState);
     void onLowMemory();
+    void onDestroyView();
 }

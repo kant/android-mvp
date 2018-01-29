@@ -110,4 +110,12 @@ public abstract class MVPPresenter<V extends MVPView> {
         observer.onLowMemory();
     }
 
+    /**
+     * Called on the lifecycle {@code onDestroyView()} of the Fragment
+     */
+    @CallSuper
+    public void onDestroyView() {
+        observer.onDestroyView();
+    }
+
 }

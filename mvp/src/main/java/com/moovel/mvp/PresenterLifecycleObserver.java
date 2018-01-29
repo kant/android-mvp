@@ -47,6 +47,11 @@ class PresenterLifecycleObserver<VIEW extends MVPView, PRESENTER extends MVPPres
     }
 
     @Override
+    public void onDestroyView() {
+        presenter.onDestroyView();
+    }
+
+    @Override
     public void onStart() {
         presenter.attachView(view);
         presenter.onStart();
