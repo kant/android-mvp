@@ -81,6 +81,24 @@ public class CompositeLifecycleObserverTest {
     }
 
     @Test
+    public void addLifecycleObserverDoesNotAddTwice() {
+        CompositeLifecycleObserver observers = new CompositeLifecycleObserver();
+        new PresenterLifecycleObserver<>(null, null);
+        PresenterLifecycleObserver lifecycleObserver = new PresenterLifecycleObserver<>(null, null);
+        PresenterLifecycleObserver lifecycleObserver2 = new PresenterLifecycleObserver<>(null, null);
+        observers.addLifecycleObserver(lifecycleObserver);
+        observers.addLifecycleObserver(lifecycleObserver);
+
+        assertEquals(1, observers.observers.size());
+
+        observers.observers.clear();
+        observers.addLifecycleObserver(lifecycleObserver);
+        observers.addLifecycleObserver(lifecycleObserver2);
+
+        assertEquals(2, observers.observers.size());
+    }
+
+    @Test
     public void testIfMethodsCalledInCorrectOrder() {
         CompositeLifecycleObserver observers = new CompositeLifecycleObserver();
         LifecycleObserver observer1 = Mockito.mock(LifecycleObserver.class);

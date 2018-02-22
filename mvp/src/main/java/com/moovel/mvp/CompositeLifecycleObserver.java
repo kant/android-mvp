@@ -21,14 +21,15 @@ import android.os.Bundle;
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
 import java.util.LinkedList;
-import java.util.List;
 
 final class CompositeLifecycleObserver implements LifecycleObserver {
 
-    final List<LifecycleObserver> observers = new LinkedList<>();
+    final LinkedList<LifecycleObserver> observers = new LinkedList<>();
 
     public void addLifecycleObserver(LifecycleObserver plugin) {
-        observers.add(plugin);
+        if (!observers.contains(plugin)) {
+            observers.add(plugin);
+        }
     }
 
     public void removeLifecycleObserver(LifecycleObserver plugin) {
@@ -92,6 +93,7 @@ final class CompositeLifecycleObserver implements LifecycleObserver {
         }
     }
 
+    @Override
     public void onDestroyView() {
         for (int i = 0; i < observers.size(); i++) {
             observers.get(i).onDestroyView();

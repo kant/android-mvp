@@ -22,6 +22,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -31,6 +36,10 @@ dependencies {
     compile libraries.dagger.android.support
     annotationProcessor libraries.dagger.compiler
     annotationProcessor libraries.dagger.android.processor
+
+    testCompile "org.robolectric:robolectric:3.7.1"
+    testCompile "org.robolectric:shadows-support-v4:3.3.2"
+    testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.github.ben-manes.versions'

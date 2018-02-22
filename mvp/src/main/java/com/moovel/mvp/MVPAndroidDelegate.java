@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.moovel.mvp.lifecycle.LifecycleObserver;
 
+import java.util.ListIterator;
+
 final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresenter<VIEW>> {
     private final CompositeLifecycleObserver observer = new CompositeLifecycleObserver();
 
@@ -15,7 +17,20 @@ final class MVPAndroidDelegate<VIEW extends MVPView, PRESENTER extends MVPPresen
     }
 
     public void attachView(VIEW view, PRESENTER presenter) {
+        //Check for old presenterLifecycleObserver and remove before adding a new one
+        removeOldPresenterLifecycleObserverIfNeeded();
+
         observer.addLifecycleObserver(new PresenterLifecycleObserver<>(view, presenter));
+    }
+
+    private void removeOldPresenterLifecycleObserverIfNeeded() {
+        ListIterator<LifecycleObserver> iter = observer.observers.listIterator();
+        while (iter.hasNext()) {
+            if (iter.next() instanceof PresenterLifecycleObserver) {
+                iter.remove();
+                break;
+            }
+        }
     }
 
     public void addLifecycleObserver(LifecycleObserver interceptor) {

@@ -54,7 +54,9 @@ public class WrongUsageDetector extends Detector implements Detector.JavaPsiScan
         if (element == null) return false;
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
-            if ("onCreate".equals(method.getName()) || "onDestroy".equals(method.getName())) {
+            if ("onAttach".equals(method.getName()) || "onCreate".equals(method.getName()) || "onCreateView".equals(method.getName())
+                    || "onActivityCreated".equals(method.getName()) || "onViewCreated".equals(method.getName())
+                    || "onDestroy".equals(method.getName()) || "onDestroyView".equals(method.getName())) {
                 return true;
             }
         }

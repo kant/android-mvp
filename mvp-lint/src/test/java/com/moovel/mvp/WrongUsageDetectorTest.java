@@ -64,6 +64,66 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
     }
 
     @Test
+    public void testErrorOnCreateViewMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onCreateView() {\n" +
+                "        getView();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnActivityCreatedMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onActivityCreated() {\n" +
+                "        getView();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnAttachMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onAttach() {\n" +
+                "        getView();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
+    public void testErrorOnViewCreatedMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onViewCreated() {\n" +
+                "        getView();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));
+    }
+
+    @Test
     public void testErrorOnCreateMethod() throws Exception {
         @Language("JAVA") String source = ""
                 + "package com.moovel.mvp;\n" +
@@ -115,7 +175,21 @@ public class WrongUsageDetectorTest extends LintDetectorTest {
                 "    }\n" +
                 "}";
         assertEquals(NO_WARNING, lintFiles(java(source), presenterStub));
-    }
+  }
+
+    @Test
+    public void testErrorOnDestoryViewMethod() throws Exception {
+        @Language("JAVA") String source = ""
+                + "package com.moovel.mvp;\n" +
+                "public class Presenter extends MVPPresenter {\n" +
+                "    protected void onDestroyView() {\n" +
+                "        getView();\n" +
+                "    }\n" +
+                "}";
+        assertEquals("src/com/moovel/mvp/Presenter.java:4: Error: Pointless call to getView [UnboundViewUsage]\n" +
+                "        getView();\n" +
+                "        ~~~~~~~~~\n" +
+                "1 errors, 0 warnings\n", lintFiles(java(source), presenterStub));    }
 
     @Test
     public void testErrorOnPauseMethod() throws Exception {

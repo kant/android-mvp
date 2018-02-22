@@ -49,8 +49,6 @@ public abstract class DaggerMVPDialogFragment<VIEW extends MVPView, PRESENTER ex
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //noinspection unchecked
-        delegate.attachView((VIEW) this, getPresenter());
         delegate.onCreate(savedInstanceState);
     }
 
@@ -63,6 +61,7 @@ public abstract class DaggerMVPDialogFragment<VIEW extends MVPView, PRESENTER ex
     @Override
     public void onStart() {
         super.onStart();
+        delegate.attachView((VIEW) this, getPresenter());
         delegate.onStart();
     }
 

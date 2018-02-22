@@ -69,4 +69,9 @@ public final class LifecycleLogger implements LifecycleObserver {
     public void onLowMemory() {
         Timber.v("%s.onLowMemory()", className);
     }
+
+    @Override
+    public void onDestroyView() {
+        Timber.v("%s.onDestroyView()", className);
+    }
 }

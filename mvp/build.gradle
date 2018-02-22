@@ -18,6 +18,11 @@ android {
         textOutput 'stdout'
         disable "GradleDependency", "OldTargetApi"
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
 }
 
 configurations {
@@ -30,6 +35,8 @@ dependencies {
 
     testCompile libraries.junit
     testCompile libraries.mockito
+    testCompile "org.robolectric:robolectric:3.7.1"
+    testCompile "org.robolectric:shadows-support-v4:3.3.2"
 
     lintChecks project(path: ':mvp-lint', configuration: 'lintChecks')
 }

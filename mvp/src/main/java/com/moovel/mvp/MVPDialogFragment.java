@@ -26,14 +26,14 @@ public abstract class MVPDialogFragment<VIEW extends MVPView, PRESENTER extends 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //noinspection unchecked
-        delegate.attachView((VIEW) this, getPresenter());
         delegate.onCreate(savedInstanceState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        //noinspection unchecked
+        delegate.attachView((VIEW) this, getPresenter());
         delegate.onStart();
     }
 
