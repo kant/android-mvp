@@ -22,7 +22,7 @@ version = VERSION_NAME
 
 def localMavenPath = "file://" + System.getProperty("user.home") + "/.m2/repository/"
 def isCI = Boolean.parseBoolean(System.getenv("IS_CI") ?: "false")
-def repositoryUrl = isCI ? "https://api.bintray.com/maven/moovel/android-public/mvp/publish=1" : localMavenPath
+def repositoryUrl = isCI ? "https://api.bintray.com/maven/moovel/android-public/$POM_ARTIFACT_ID/;publish=1" : localMavenPath
 
 def getRepositoryUsername() {
     return project.hasProperty('bintrayUser') ? project.bintrayUser : System.getenv("BINTRAY_USER") ?: ""

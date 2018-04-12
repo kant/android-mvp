@@ -2,27 +2,23 @@
 
 This framework is our Android-Framework for MVP.
 
-Dependencies:
-Android Support-Library v22.2.0
-
 # How to use it
 
 Add the library to your dependencies:
-```
-compile 'com.moovel.mvp:mvp:0.6.0'
-```
 
-
+```gradle
+compile 'com.moovel.mvp:mvp:0.8.0'
+```
 
 ### 1. Create a View
-```
+```java
 public interface AwesomeView extends MVPView {
     ...
 }
 ```
 
 ### 2. Create a Presenter
-```
+```java
 public class AwesomePresenter extends MVPPresenter<AwesomeView> {
     public AwesomePresenter() {
     }
@@ -31,20 +27,20 @@ public class AwesomePresenter extends MVPPresenter<AwesomeView> {
 
 ### 3. Create your screens
 Extend your Fragments from MVPFragment or your Activities from MVPActivity. These are
-generic classes using 2 generic types. The first one is the view interface, the second one is 
+generic classes using 2 generic types. The first one is the view interface, the second one is
 the type of presenter which you want to use
 
-```
-public class AwesomeActivity extends MVPActivity<AwesomeView, AwesomePresenter> 
+```java
+public class AwesomeActivity extends MVPActivity<AwesomeView, AwesomePresenter>
     implements AwesomeView {
 
     AwesomePresenter presenter = new AwesomePresenter();
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    
+
     @Override
     protected AwesomePresenter getPresenter() {
         return presenter;
@@ -52,7 +48,6 @@ public class AwesomeActivity extends MVPActivity<AwesomeView, AwesomePresenter>
 ```
 
 Note: the Method "getPresenter" is used during the "onCreate" process, so make sure the presenter exists before.
-
 
 # Lifecycle
 * The view gets attached to the presenter in the "onStart" method and gets unbind "onStop".
@@ -81,12 +76,13 @@ Sometimes you want to execute an action, when a lifecycle event happens i.e. you
 the activity is stops or you want to unsubscribe from an rxjava subscription/disposable when the
 activity is pausing.
 
-This is why we introduced the LifecycleEventScheduler. It is an implementation of a LifecycleObserver which you can 
+This is why we introduced the LifecycleEventScheduler. It is an implementation of a LifecycleObserver which you can
 add manually to your MVPFragment/MVPActivity/MVPPresenter using the methods mentioned in the
 LifecycleObservers - Section.
 
 Here's an example of executing a runnable on stop
-```
+
+```java
 private final LifecycleEventScheduler<Runnable> lifecycleScheduler
         = new LifecycleEventScheduler<>((event, item, state) -> item.run());
 
@@ -99,14 +95,16 @@ public void onCreate() {
     lifecycleScheduler.enqueue(RESUME, () -> Log.e(TAG, "onResume was called"));
 }
 ```
+
 Note that the action will be called ONCE for all events you register an action for. On registering an action
 you have to pass the [event name](mvp/src/main/java/com/moovel/mvp/lifecycle/LifecycleEvent.java) and an item you want to do something with.
-
 
 # Dagger 2 Extension
 To simplyfy our lifes, when using dagger 2, we wrote an implementation, that simplifies presenter injections.
 [Dagger Extension](mvp-dagger/)
+
 ## LICENSE
+
 ```
 Copyrights 2017 moovel Group GmbH
 
