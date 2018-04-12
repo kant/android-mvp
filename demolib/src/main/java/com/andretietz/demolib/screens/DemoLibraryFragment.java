@@ -1,5 +1,6 @@
 package com.andretietz.demolib.screens;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ public class DemoLibraryFragment extends DaggerMVPFragment<DemoLibraryFragmentVi
 
     private TextView textView;
 
-    @Override
+    @Override @SuppressLint("SetTextI18n")
     public void showInjectedObjects(ApplicationObject apo, ActivityObject aco, FragmentObject fro) {
         textView.setText("DemoLibraryFragment: \n" + apo + "\n" + aco + "\n" + fro);
     }

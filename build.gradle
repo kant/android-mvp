@@ -1,4 +1,4 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     repositories {
@@ -6,30 +6,23 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
 allprojects {
     repositories {
-        // check local
         mavenLocal()
         google()
         mavenCentral()
         jcenter()
     }
 }
-apply from: 'dependencies.gradle'
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
 
 task wrapper(type: Wrapper) {
-   gradleVersion = '4.5'
+   gradleVersion = '4.6'
    distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -40,6 +33,17 @@ subprojects { project ->
         // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
         project.android.libraryVariants.all {
            it.generateBuildConfig.enabled = false
+        }
+    }
+
+    project.configurations.all {
+        resolutionStrategy {
+            eachDependency { details ->
+                // Force all of the primary support libraries to use the same version.
+                if (details.requested.group == 'com.android.support' && !details.requested.name.startsWith('multidex')) {
+                    details.useVersion supportLibraryVersion
+                }
+            }
         }
     }
 }

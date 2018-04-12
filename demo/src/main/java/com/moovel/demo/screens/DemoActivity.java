@@ -1,5 +1,6 @@
 package com.moovel.demo.screens;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +22,7 @@ public class DemoActivity extends DaggerMVPActivity<DemoView, DemoPresenter> imp
         findViewById(R.id.button).setOnClickListener(v -> getPresenter().onButtonClicked());
     }
 
-    @Override
+    @Override @SuppressLint("SetTextI18n")
     public void showInjectedObjects(ApplicationObject apo, ActivityObject aco) {
         ((TextView) findViewById(R.id.textTitle)).setText(
                 "DemoActivity: \n" +

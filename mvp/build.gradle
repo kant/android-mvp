@@ -1,22 +1,18 @@
 apply plugin: 'com.android.library'
 
-group 'com.moovel.mvp'
-version "$libraryVersion"
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "$version"
     }
     lintOptions {
         textReport true
         textOutput 'stdout'
-        disable "GradleDependency", "OldTargetApi"
+        disable "GradleDependency", "GoogleAppIndexingWarning"
     }
 
     testOptions {
@@ -25,34 +21,17 @@ android {
     }
 }
 
-configurations {
-    lintChecks
-}
-
 dependencies {
+    api "com.android.support:appcompat-v7:$supportLibraryVersion"
 
-    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    lintChecks project(':mvp-lint')
 
-    testCompile libraries.junit
-    testCompile libraries.mockito
-    testCompile "org.robolectric:robolectric:3.7.1"
-    testCompile "org.robolectric:shadows-support-v4:3.3.2"
-
-    lintChecks project(path: ':mvp-lint', configuration: 'lintChecks')
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.assertj:assertj-core:$assertJ3Version"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "org.robolectric:shadows-supportv4:$robolectricVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
-task copyLintJar(type: Copy) {
-    from(configurations.lintChecks) {
-        rename { 'lint.jar' }
-    }
-    into 'build/intermediates/lint/'
-}
-
-project.afterEvaluate {
-    def compileLintTask = project.tasks.find { it.name == 'compileLint' }
-    compileLintTask.dependsOn(copyLintJar)
-}
-
-apply plugin: 'com.github.ben-manes.versions'
-apply from: 'maven.gradle'
+apply from: rootProject.file('gradle/publish.gradle')
 apply from: '../checkstyle.gradle'
