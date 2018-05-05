@@ -100,7 +100,7 @@ Note that the action will be called ONCE for all events you register an action f
 you have to pass the [event name](mvp/src/main/java/com/moovel/mvp/lifecycle/LifecycleEvent.java) and an item you want to do something with.
 
 # Dagger 2 Extension
-To simplyfy our lifes, when using dagger 2, we wrote an implementation, that simplifies presenter injections.
+To simplify our lifes, when using dagger 2, we wrote an implementation, that simplifies presenter injections.
 [Dagger Extension](mvp-dagger/)
 
 ## LICENSE
